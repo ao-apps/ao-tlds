@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ao-tlds - Self-updating Java API to get top-level domains.
+Copyright (C) 2016  AO Industries, Inc.
+    support@aoindustries.com
+    7262 Bull Pen Cir
+    Mobile, AL 36695
+
+This file is part of ao-tlds.
+
+ao-tlds is free software: you can redistribute it and/or modify
+it under the terms of the GNU Lesser General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+ao-tlds is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU Lesser General Public License for more details.
+
+You should have received a copy of the GNU Lesser General Public License
+along with ao-tlds.  If not, see <http://www.gnu.org/licenses />.
+-->
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+
+	<parent>
+		<groupId>com.aoindustries</groupId>
+		<artifactId>ao-oss-parent</artifactId>
+		<version>1.0.1</version>
+		<relativePath>../../ao-oss-parent/pom.xml</relativePath>
+	</parent>
+
+	<groupId>com.aoindustries</groupId>
+	<artifactId>ao-tlds-book</artifactId>
+	<version>1.0.0-SNAPSHOT</version>
+	<packaging>jar</packaging>
+
+	<properties>
+		<!-- These values are copied from the project being documented -->
+		<documented.groupId>com.aoindustries</documented.groupId>
+		<documented.artifactId>ao-tlds</documented.artifactId>
+		<documented.name>AO TLDs</documented.name>
+		<documented.url>https://aoindustries.com/${documented.artifactId}/</documented.url>
+		<documented.description>Self-updating Java API to get top-level domains.</documented.description>
+		<documented.inceptionYear>2016</documented.inceptionYear>
+		<documented.scm.url>https://github.com/aoindustries/${documented.artifactId}</documented.scm.url>
+
+		<description.html><![CDATA[Documentation for <a target="_top" href="${documented.url}">${documented.name}</a> in <a target="_top" href="https://semanticcms.com/">SemanticCMS</a> format.]]></description.html>
+	</properties>
+
+	<name>${documented.name} Book</name>
+	<url>${documented.url}</url>
+	<description>Documentation for ${documented.name} in SemanticCMS format.</description>
+	<inceptionYear>${documented.inceptionYear}</inceptionYear>
+
+	<scm>
+		<!-- Can't inherit due to multi-module -->
+		<connection>scm:git:git://github.com/aoindustries/${documented.artifactId}.git</connection>
+		<developerConnection>scm:git:git@github.com:aoindustries/${documented.artifactId}.git</developerConnection>
+		<url>${documented.scm.url}</url>
+		<tag>HEAD</tag>
+	</scm>
+
+	<dependencies>
+		<dependency>
+			<groupId>javax.servlet</groupId>
+			<artifactId>javax.servlet-api</artifactId>
+			<version>3.0.1</version>
+			<scope>provided</scope>
+		</dependency>
+		<!-- JSTL: See http://stackoverflow.com/questions/6094329/tomcat-7-and-jstl -->
+		<dependency>
+			<groupId>javax.servlet</groupId>
+			<artifactId>jstl</artifactId>
+			<version>1.2</version>
+		</dependency>
+		<dependency>
+			<groupId>javax.servlet.jsp</groupId>
+			<artifactId>javax.servlet.jsp-api</artifactId>
+			<version>2.2.1</version>
+			<scope>provided</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.glassfish.web</groupId>
+			<artifactId>jstl-impl</artifactId>
+			<version>1.2</version>
+			<exclusions>
+				<exclusion>
+					<groupId>javax.servlet</groupId>
+					<artifactId>servlet-api</artifactId>
+				</exclusion>
+				<exclusion>
+					<groupId>javax.servlet.jsp</groupId>
+					<artifactId>jsp-api</artifactId>
+				</exclusion>
+				<exclusion>
+					<groupId>javax.servlet.jsp.jstl</groupId>
+					<artifactId>jstl-api</artifactId>
+				</exclusion>
+			</exclusions>
+		</dependency>
+		<dependency>
+			<groupId>com.aoindustries</groupId>
+			<artifactId>ao-taglib</artifactId>
+			<version>2.3.0</version>
+		</dependency>
+		<dependency>
+			<groupId>com.semanticcms</groupId>
+			<artifactId>semanticcms-changelog-taglib</artifactId>
+			<version>1.0.0</version>
+		</dependency>
+		<dependency>
+			<groupId>com.semanticcms</groupId>
+			<artifactId>semanticcms-core-taglib</artifactId>
+			<version>1.8.1</version>
+		</dependency>
+		<dependency>
+			<groupId>com.semanticcms</groupId>
+			<artifactId>semanticcms-section-taglib</artifactId>
+			<version>1.4.2</version>
+		</dependency>
+		<!-- Dependency for dependencyversion-maven-plugin only -->
+		<dependency>
+			<groupId>com.aoindustries</groupId>
+			<artifactId>ao-tlds</artifactId>
+			<version>1.0.0-SNAPSHOT</version>
+			<type>pom</type>
+			<scope>provided</scope>
+			<optional>true</optional>
+		</dependency>
+	</dependencies>
+</project>

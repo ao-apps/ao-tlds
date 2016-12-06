@@ -1,0 +1,81 @@
+<!--
+ao-tlds - Self-updating Java API to get top-level domains.
+Copyright (C) 2016  AO Industries, Inc.
+    support@aoindustries.com
+    7262 Bull Pen Cir
+    Mobile, AL 36695
+
+This file is part of ao-tlds.
+
+ao-tlds is free software: you can redistribute it and/or modify
+it under the terms of the GNU Lesser General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+ao-tlds is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU Lesser General Public License for more details.
+
+You should have received a copy of the GNU Lesser General Public License
+along with ao-tlds.  If not, see <http://www.gnu.org/licenses />.
+-->
+<jsp:root
+	xmlns:ao="https://aoindustries.com/ao-taglib/"
+	xmlns:core="https://semanticcms.com/core/taglib/"
+	xmlns:jsp="http://java.sun.com/JSP/Page"
+	xmlns:section="https://semanticcms.com/section/taglib/"
+	version="2.1"
+>
+	<jsp:directive.page language="java" pageEncoding="UTF-8" session="false" />
+	<core:page
+		title="@{documented.name}"
+		description="@{documented.description}"
+		datePublished="2016-12-05T18:27:49-0600"
+	>
+		<core:child page="changelog.jspx" />
+		<core:child page="apidocs/index.jspx" />
+		<p>
+			@{documented.description}
+		</p>
+		<section:section label="Features">
+			<ul>
+				<li>Background self-updating from <ao:a href="https://data.iana.org/TLD/tlds-alpha-by-domain.txt">official iana.org source</ao:a>.</li>
+				<li>Stores updates in <ao:a href="http://docs.oracle.com/javase/6/docs/technotes/guides/preferences/">Java Preferences API</ao:a> to reduce queries of data.iana.org.</li>
+				<li>Small footprint, self-contained, no transitive dependencies - not part of a big monolithic package.</li>
+			</ul>
+		</section:section>
+		<section:section label="Motivation">
+			<p>
+				<ao:a href="https://en.wikipedia.org/wiki/Top-level_domain">Top level domains</ao:a> have become a moving target.
+				Any API that includes a hard-coded list, array, enumeration, or even an external flatfile of top level domains will
+				require some routine maintenance to update the list.  We support many apps that are well established, and largely
+				set-it-and-forget-it and routinely go long time periods without updates.  We prefer to write low maintenance code
+				and existing solutions do not fulfill this requirement.
+			</p>
+		</section:section>
+		<section:section label="Evaluated Alternatives">
+			<ul>
+				<li>
+					<ao:a href="https://commons.apache.org/proper/commons-validator/apidocs/org/apache/commons/validator/routines/DomainValidator.html">Apache Commons Validator</ao:a>
+					- Includes a hard-coded list of TLDs.  Use of this API requires occasional updates of JARs and redeploys.
+				</li>
+				<li>
+					<ao:a href="http://google.github.io/guava/releases/5.0/api/docs/com/google/common/net/InternetDomainName.html">Google Guava InternetDomainName</ao:a>
+					- Also includes a hard-coded list of TLDs in
+					<ao:a href="http://grepcode.com/file/repo1.maven.org/maven2/com.google.guava/guava/r06/com/google/common/net/TldPatterns.java">com.google.common.net.TldPatterns</ao:a>.
+					Same issue with maintenance applies.
+				</li>
+			</ul>
+		</section:section>
+		<section:section label="Project Links">
+			<ul>
+				<li><core:link page="index.jspx">Project Home</core:link></li>
+				<li><core:link page="changelog.jspx">Changelog</core:link></li>
+				<li><core:link page="apidocs/index.jspx">API Docs</core:link></li>
+				<li><ao:a href="https://search.maven.org/#search%7Cgav%7C1%7Cg:%22@{documented.groupId}%22%20AND%20a:%22@{documented.artifactId}%22">Maven Central Repository</ao:a></li>
+				<li><ao:a href="@{documented.scm.url}">GitHub</ao:a></li>
+			</ul>
+		</section:section>
+	</core:page>
+</jsp:root>
