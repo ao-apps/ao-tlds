@@ -7,7 +7,7 @@ Self-updating Java API to get top-level domains.
 * Small footprint, self-contained, no transitive dependencies - not part of a big monolithic package.
 
 ## Motivation
-[Top level domains](https://en.wikipedia.org/wiki/Top-level_domain) have become a moving target.  Any API that includes a hard-coded list, array, enumeration, or even an external flatfile of top level domains will require some routine maintenance to update the list.  We support many apps that are well established, and largely set-it-and-forget-it and routinely go long time periods without updates.  We prefer to write low maintenance code and existing solutions do not fulfill this requirement.
+[Top level domains](https://en.wikipedia.org/wiki/Top-level_domain) have become a moving target.  Any API that includes a hard-coded list, array, enumeration, or even an external flatfile of top level domains will require some routine maintenance to update the list.  We support many well-established and largely set-it-and-forget-it apps that routinely go long time periods without updates.  We prefer to write low maintenance code and existing solutions do not fulfill this requirement.
 
 ## Evaluated Alternatives
 * [Apache Commons Validator](https://commons.apache.org/proper/commons-validator/apidocs/org/apache/commons/validator/routines/DomainValidator.html) - Includes a hard-coded list of TLDs.  Use of this API requires occasional updates of JARs and redeploys.
