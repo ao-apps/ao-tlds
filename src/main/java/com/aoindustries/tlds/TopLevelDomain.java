@@ -38,7 +38,10 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
+import java.util.Map;
 import java.util.Random;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -158,6 +161,8 @@ public class TopLevelDomain {
 		 */
 		private final long nextUpdateBefore;
 
+		private final Map<String,String> lowerTldMap;
+
 		private Dataset(
 			String source,
 			long lastUpdatedTime,
@@ -174,7 +179,7 @@ public class TopLevelDomain {
 					if(line.startsWith("#")) {
 						newComments.add(line);
 					} else {
-						newTopLevelDomains.add(line);
+						newTopLevelDomains.add(line.intern());
 					}
 				}
 				newTopLevelDomains.trimToSize();
@@ -227,6 +232,11 @@ public class TopLevelDomain {
 					logger.fine("nextUpdateAfter=" + new Date(nextUpdateAfter));
 					logger.fine("nextUpdateBefore=" + new Date(nextUpdateBefore));
 				}
+			}
+			// Compute lowerTldMap
+			{
+				lowerTldMap = new HashMap<String,String>(topLevelDomains.size()*4/3+1);
+				for(String tld : topLevelDomains) lowerTldMap.put(tld.toLowerCase(Locale.ROOT).intern(), tld);
 			}
 		}
 
@@ -484,6 +494,9 @@ public class TopLevelDomain {
 	 * Gets an unmodifiable list of the most recently retrieved top-level domains,
 	 * in the case and order contained within
 	 * <a href="https://data.iana.org/TLD/tlds-alpha-by-domain.txt">tlds-alpha-by-domain.txt</a>.
+	 * <p>
+	 * Each element is {@link String#intern() interned}.
+	 * </p>
 	 */
 	public static List<String> getTopLevelDomains() {
 		return getDataset().topLevelDomains;
@@ -518,6 +531,18 @@ public class TopLevelDomain {
 	 */
 	public static long getLastSuccessfulUpdateTime() {
 		return getDataset().lastSuccessfulUpdateTime;
+	}
+
+	/**
+	 * Provides a way to get the top level domain based on label (case-insensitive).
+	 * <p>
+	 * Any non-null returned value is {@link String#intern() interned}.
+	 * </p>
+	 *
+	 * @return  The top level domain based on label (case-insensitive) or {@code null} if no match.
+	 */
+	public static String getByLabel(String label) {
+		return getDataset().lowerTldMap.get(label.toLowerCase(Locale.ROOT));
 	}
 
 	/**
