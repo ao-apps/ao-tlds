@@ -35,7 +35,7 @@ along with ao-tlds.  If not, see <http://www.gnu.org/licenses />.
 		title="@{documented.name} Changelog"
 		shortTitle="Changelog"
 		tocLevels="1"
-		datePublished="2016-12-05T18:27:49-0600"
+		datePublished="2016-12-12T14:20:29-0600"
 	>
 		<!-- The current snapshot, unreleased version -->
 		<c:set var="version" value="@{com.aoindustries:ao-tlds:pom.version}" />
@@ -50,11 +50,20 @@ along with ao-tlds.  If not, see <http://www.gnu.org/licenses />.
 				groupId="@{documented.groupId}"
 				artifactId="@{documented.artifactId}"
 				scmUrl="@{documented.scm.url}"
-			>
-				<ul>
-					<li>New self-updating Java API to get top-level domains.</li>
-				</ul>
-			</changelog:release>
+			/>
 		</c:if>
+
+		<changelog:release
+			projectName="@{documented.name}"
+			version="1.0.0"
+			datePublished="2016-12-12T14:20:29-0600"
+			groupId="@{documented.groupId}"
+			artifactId="@{documented.artifactId}"
+			scmUrl="@{documented.scm.url}"
+		>
+			<ul>
+				<li>New self-updating Java API to get top-level domains.</li>
+			</ul>
+		</changelog:release>
 	</core:page>
 </jsp:root>
