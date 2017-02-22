@@ -1,6 +1,6 @@
 /*
  * ao-tlds - Self-updating Java API to get top-level domains.
- * Copyright (C) 2016  AO Industries, Inc.
+ * Copyright (C) 2016, 2017  AO Industries, Inc.
  *     support@aoindustries.com
  *     7262 Bull Pen Cir
  *     Mobile, AL 36695
@@ -94,9 +94,9 @@ public class TopLevelDomain {
 	private static class Dataset {
 
 		/**
-		 * The mean number of milliseconds between updates after a success.
+		 * The minimum number of milliseconds between updates after a success.
 		 */
-		private static final long UPDATE_INTERVAL_SUCCESS_MEAN =
+		private static final long UPDATE_INTERVAL_SUCCESS_MIN =
 			DEBUG
 			? 60L * 60 * 1000 // 1 hour
 			: 7L * 24 * 60 * 60 * 1000 // 7 days
@@ -112,9 +112,9 @@ public class TopLevelDomain {
 		;
 
 		/**
-		 * The mean number of milliseconds between updates after a failure.
+		 * The minimum number of milliseconds between updates after a failure.
 		 */
-		private static final long UPDATE_INTERVAL_FAILURE_MEAN =
+		private static final long UPDATE_INTERVAL_FAILURE_MIN =
 			DEBUG
 			? 10L * 60 * 1000 // 10 minutes
 			: 24L * 60 * 60 * 1000 // 1 day
@@ -213,20 +213,20 @@ public class TopLevelDomain {
 			}
 			// Random next update time
 			{
-				long updateMean;
+				long updateMin;
 				int updateDeviation;
 				if(lastUpdateSuccessful) {
-					updateMean = UPDATE_INTERVAL_SUCCESS_MEAN;
+					updateMin = UPDATE_INTERVAL_SUCCESS_MIN;
 					updateDeviation = UPDATE_INTERVAL_SUCCESS_DEVIATION;
 				} else {
-					updateMean = UPDATE_INTERVAL_FAILURE_MEAN;
+					updateMin = UPDATE_INTERVAL_FAILURE_MIN;
 					updateDeviation = UPDATE_INTERVAL_FAILURE_DEVIATION;
 				}
 				int randomDeviation = random.nextInt(updateDeviation);
-				this.nextUpdateAfter = lastUpdatedTime + updateMean + randomDeviation;
-				this.nextUpdateBefore = lastUpdatedTime - updateMean - randomDeviation;
+				this.nextUpdateAfter = lastUpdatedTime + updateMin + randomDeviation;
+				this.nextUpdateBefore = lastUpdatedTime - updateMin - randomDeviation;
 				if(logger.isLoggable(Level.FINE)) {
-					logger.fine("updateMean=" + updateMean);
+					logger.fine("updateMin=" + updateMin);
 					logger.fine("updateDeviation=" + updateDeviation);
 					logger.fine("randomDeviation=" + randomDeviation);
 					logger.fine("nextUpdateAfter=" + new Date(nextUpdateAfter));
