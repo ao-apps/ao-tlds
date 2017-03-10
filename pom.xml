@@ -2,9 +2,9 @@
 <!--
 ao-tlds - Self-updating Java API to get top-level domains.
 Copyright (C) 2016, 2017  AO Industries, Inc.
-    support@aoindustries.com
-    7262 Bull Pen Cir
-    Mobile, AL 36695
+	support@aoindustries.com
+	7262 Bull Pen Cir
+	Mobile, AL 36695
 
 This file is part of ao-tlds.
 
@@ -50,10 +50,10 @@ along with ao-tlds.  If not, see <http://www.gnu.org/licenses />.
 	</scm>
 
 	<dependencies>
-        <dependency>
-            <groupId>junit</groupId>
-            <artifactId>junit</artifactId>
-            <scope>test</scope>
-        </dependency>
-    </dependencies>
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+			<scope>test</scope>
+		</dependency>
+	</dependencies>
 </project>
