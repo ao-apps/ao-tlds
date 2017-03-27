@@ -1,6 +1,13 @@
 # [<img src="ao-logo.png" alt="AO Logo" width="35" height="40">](https://aoindustries.com/) [AO TLDs](https://aoindustries.com/ao-tlds/)
 Self-updating Java API to get top-level domains.
 
+## Project Links
+* [Project Home](https://aoindustries.com/ao-tlds/)
+* [Changelog](https://aoindustries.com/ao-tlds/changelog)
+* [API Docs](https://aoindustries.com/ao-tlds/apidocs/)
+* [Maven Central Repository](https://search.maven.org/#search%7Cgav%7C1%7Cg:%22com.aoindustries%22%20AND%20a:%22ao-tlds%22)
+* [GitHub](https://github.com/aoindustries/ao-tlds)
+
 ## Features
 * Background self-updating from [official iana.org source](https://data.iana.org/TLD/tlds-alpha-by-domain.txt).
 * Stores updates in [Java Preferences API](http://docs.oracle.com/javase/6/docs/technotes/guides/preferences/) to reduce queries of data.iana.org.
@@ -12,13 +19,6 @@ Self-updating Java API to get top-level domains.
 ## Evaluated Alternatives
 * [Apache Commons Validator](https://commons.apache.org/proper/commons-validator/apidocs/org/apache/commons/validator/routines/DomainValidator.html) - Includes a hard-coded list of TLDs.  Use of this API requires occasional updates of JARs and redeploys.
 * [Google Guava InternetDomainName](http://google.github.io/guava/releases/5.0/api/docs/com/google/common/net/InternetDomainName.html) - Also includes a hard-coded list of TLDs in [com.google.common.net.TldPatterns](http://grepcode.com/file/repo1.maven.org/maven2/com.google.guava/guava/r06/com/google/common/net/TldPatterns.java).  Same issue with maintenance applies.
-
-## Project Links
-* [Project Home](https://aoindustries.com/ao-tlds/)
-* [Changelog](https://aoindustries.com/ao-tlds/changelog)
-* [API Docs](https://aoindustries.com/ao-tlds/apidocs/)
-* [Maven Central Repository](https://search.maven.org/#search%7Cgav%7C1%7Cg:%22com.aoindustries%22%20AND%20a:%22ao-tlds%22)
-* [GitHub](https://github.com/aoindustries/ao-tlds)
 
 ## Contact Us
 For questions or support, please [contact us](https://aoindustries.com/contact):
