@@ -386,7 +386,7 @@ public class TopLevelDomain {
 						throw new RuntimeException("Unable to load bootstreap top level domains", e);
 					}
 				} else {
-					logger.info("Successfully loaded from preferences");
+					logger.fine("Successfully loaded from preferences");
 				}
 			}
 			// Trigger background update if is time
@@ -413,11 +413,11 @@ public class TopLevelDomain {
 						&& currentTime > newDataset.nextUpdateBefore
 					) {
 						// newDataset is valid, use it
-						logger.info("Update from preferences is current, using it instead of beginning background update");
+						logger.fine("Update from preferences is current, using it instead of beginning background update");
 						dataset = newDataset;
 					} else {
 						// Begin background update
-						logger.info("Spawning background update thread");
+						logger.fine("Spawning background update thread");
 						updateThread = new Thread(
 							new Runnable() {
 								@Override
@@ -440,7 +440,7 @@ public class TopLevelDomain {
 											synchronized(lock) {
 												dataset = loadedDataset;
 												try {
-													logger.info("Saving updated top level domains to preferences");
+													logger.fine("Saving updated top level domains to preferences");
 													dataset.saveToPreferences();
 												} catch(BackingStoreException e) {
 													logger.log(Level.SEVERE, "Unable to save new dataset to preferences", e);
@@ -456,7 +456,7 @@ public class TopLevelDomain {
 										logger.log(Level.SEVERE, "Unable to load new dataset", t);
 										try {
 											synchronized(lock) {
-												logger.info("Saving failed update of top level domains to preferences");
+												logger.fine("Saving failed update of top level domains to preferences");
 												dataset = new Dataset(
 													dataset.source,
 													currentTime,
