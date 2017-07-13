@@ -36,7 +36,7 @@ along with ao-tlds.  If not, see <http://www.gnu.org/licenses />.
 		shortTitle="Changelog"
 		tocLevels="1"
 		datePublished="2016-12-12T14:20:29-0600"
-		dateModified="2017-02-22T01:05:58-0600"
+		dateModified="2017-07-13T18:35:31-0500"
 	>
 		<!-- The current snapshot, unreleased version -->
 		<c:set var="version" value="@{com.aoindustries:ao-tlds:pom.version}" />
@@ -54,6 +54,7 @@ along with ao-tlds.  If not, see <http://www.gnu.org/licenses />.
 			>
 				<ul>
 					<li>Updated comments and variable names to match implementation of minimum + random update intervals.</li>
+					<li>Updated dependencies.</li>
 				</ul>
 			</changelog:release>
 		</c:if>
