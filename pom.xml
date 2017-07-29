@@ -27,13 +27,13 @@ along with ao-tlds.  If not, see <http://www.gnu.org/licenses />.
 	<parent>
 		<groupId>com.aoindustries</groupId>
 		<artifactId>ao-oss-parent</artifactId>
-		<version>1.0.3</version>
+		<version>1.0.4-validation-SNAPSHOT</version>
 		<relativePath>../ao-oss-parent/pom.xml</relativePath>
 	</parent>
 
 	<groupId>com.aoindustries</groupId>
 	<artifactId>ao-tlds</artifactId>
-	<version>1.0.2-SNAPSHOT</version>
+	<version>1.0.2-validation-SNAPSHOT</version>
 	<packaging>jar</packaging>
 
 	<name>AO TLDs</name>
