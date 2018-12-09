@@ -90,9 +90,9 @@ public class TopLevelDomain {
 	private static final String DATA_ENCODING = "UTF-8";
 
 	/**
-	 * One snapshot of the data.
+	 * One snapshot of the data, representing the state at one moment in time.
 	 */
-	private static class Dataset {
+	public static class Snapshot {
 
 		/**
 		 * The minimum number of milliseconds between updates after a success.
@@ -130,7 +130,7 @@ public class TopLevelDomain {
 			: 4 * 60 * 60 * 1000 // 4 hours
 		;
 
-		private static final Preferences prefs = Preferences.userNodeForPackage(Dataset.class); // systemNodeForPackage not available as regular user in Linux
+		private static final Preferences prefs = Preferences.userNodeForPackage(Snapshot.class); // systemNodeForPackage not available as regular user in Linux
 
 		private static final Random random = new Random();
 
@@ -147,7 +147,7 @@ public class TopLevelDomain {
 		private final long lastSuccessfulUpdateTime;
 
 		/**
-		 * MD5 sum to make sure we have a consistent dataset from preferences.
+		 * MD5 sum to make sure we have a consistent snapshot from preferences.
 		 * The preferences API is not atomic so inconsistent states are detected and ignored.
 		 */
 		private final byte[] md5sum;
@@ -164,7 +164,7 @@ public class TopLevelDomain {
 
 		private final Map<String,String> lowerTldMap;
 
-		private Dataset(
+		private Snapshot(
 			String source,
 			long lastUpdatedTime,
 			boolean lastUpdateSuccessful,
@@ -242,11 +242,11 @@ public class TopLevelDomain {
 		}
 
 		/**
-		 * Loads this dataset from the system preferences.
+		 * Loads this snapshot from the system preferences.
 		 *
-		 * @return  the last stored dataset (even if stored by a different process) or {@code null} if none available.
+		 * @return  the last stored snapshot (even if stored by a different process) or {@code null} if none available.
 		 */
-		private static Dataset loadFromPreferences() {
+		private static Snapshot loadFromPreferences() {
 			logger.fine("Loading from preferences");
 			String source;
 			{
@@ -284,13 +284,13 @@ public class TopLevelDomain {
 				&& md5sum != null
 			) {
 				try {
-					Dataset newDataset = new Dataset(source, lastUpdatedTime, lastUpdateSuccessful, lastSuccessfulUpdateTime);
-					if(!Arrays.equals(md5sum, newDataset.md5sum)) {
+					Snapshot newSnapshot = new Snapshot(source, lastUpdatedTime, lastUpdateSuccessful, lastSuccessfulUpdateTime);
+					if(!Arrays.equals(md5sum, newSnapshot.md5sum)) {
 						logger.log(Level.WARNING, "Unable to load top level domains from preferences, ignoring: md5sum mismatch");
 						return null;
 					}
 					logger.fine("Successful load from preferences");
-					return newDataset;
+					return newSnapshot;
 				} catch(RuntimeException e) {
 					logger.log(Level.SEVERE, "Unable to load top level domains from preferences", e);
 					return null;
@@ -305,9 +305,9 @@ public class TopLevelDomain {
 		}
 
 		/**
-		 * Loads this dataset from the provided reader.
+		 * Loads this snapshot from the provided reader.
 		 */
-		private static Dataset loadFromReader(
+		private static Snapshot loadFromReader(
 			Reader in,
 			long lastUpdatedTime
 		) throws IOException {
@@ -317,11 +317,11 @@ public class TopLevelDomain {
 			while((numChars = in.read(buff)) != -1) {
 				sb.append(buff, 0, numChars);
 			}
-			return new Dataset(sb.toString(), lastUpdatedTime, true, lastUpdatedTime);
+			return new Snapshot(sb.toString(), lastUpdatedTime, true, lastUpdatedTime);
 		}
 
 		/**
-		 * Stores this dataset to the system preferences.
+		 * Stores this snapshot to the system preferences.
 		 */
 		private void saveToPreferences() throws BackingStoreException {
 			logger.fine("Saving to preferences");
@@ -343,18 +343,60 @@ public class TopLevelDomain {
 			logger.fine("Flushing preferences");
 			prefs.flush();
 		}
+
+		/**
+		 * @see  TopLevelDomain#getTopLevelDomains()
+		 */
+		public List<String> getTopLevelDomains() {
+			return topLevelDomains;
+		}
+
+		/**
+		 * @see  TopLevelDomain#getComments()
+		 */
+		public List<String> getComments() {
+			return comments;
+		}
+
+		/**
+		 * @see  TopLevelDomain#getLastUpdatedTime()
+		 */
+		public long getLastUpdatedTime() {
+			return lastUpdatedTime;
+		}
+
+		/**
+		 * @see  TopLevelDomain#getLastUpdateSuccessful()
+		 */
+		public boolean getLastUpdateSuccessful() {
+			return lastUpdateSuccessful;
+		}
+
+		/**
+		 * @see  TopLevelDomain#getLastSuccessfulUpdateTime()
+		 */
+		public long getLastSuccessfulUpdateTime() {
+			return lastSuccessfulUpdateTime;
+		}
+
+		/**
+		 * @see  TopLevelDomain#getByLabel(java.lang.String)
+		 */
+		public String getByLabel(String label) {
+			return lowerTldMap.get(label.toLowerCase(Locale.ROOT));
+		}
 	}
 
 	/**
-	 * Lock for dataset.
+	 * Lock for snapshot.
 	 */
 	private static class Lock {}
 	private static final Lock lock = new Lock();
 
 	/**
-	 * The last obtained dataset.
+	 * The last obtained snapshot.
 	 */
-	private static Dataset dataset;
+	private static Snapshot snapshot;
 
 	/**
 	 * The thread currently doing a background update, if any.
@@ -362,24 +404,24 @@ public class TopLevelDomain {
 	private static Thread updateThread;
 
 	/**
-	 * Gets the current set of top-level domains, in the case and order contained within
+	 * Gets a snapshot of the current set of top-level domains, in the case and order contained within
 	 * <a href="https://data.iana.org/TLD/tlds-alpha-by-domain.txt">tlds-alpha-by-domain.txt</a>.
 	 * Will trigger asynchronous background update if it is time to to so, but will use the currently
 	 * available data and not wait for the update to complete.
 	 */
-	private static Dataset getDataset() {
+	public static Snapshot getSnapshot() {
 		synchronized(lock) {
-			if(dataset == null) {
+			if(snapshot == null) {
 				// Load from preferences
 				logger.fine("Trying to load from preferences");
-				dataset = Dataset.loadFromPreferences();
+				snapshot = Snapshot.loadFromPreferences();
 				// Use hard-coded bootstrap
-				if(dataset == null) {
+				if(snapshot == null) {
 					logger.info("Update not found in preferences, using hard-coded bootstrap");
 					try {
 						Reader in = new InputStreamReader(TopLevelDomain.class.getResourceAsStream("tlds-alpha-by-domain.txt"), DATA_ENCODING);
 						try {
-							dataset = Dataset.loadFromReader(in, LAST_UPDATED);
+							snapshot = Snapshot.loadFromReader(in, LAST_UPDATED);
 						} finally {
 							in.close();
 						}
@@ -394,28 +436,27 @@ public class TopLevelDomain {
 			if(updateThread == null) {
 				final long currentTime = System.currentTimeMillis();
 				if(
-					currentTime >= dataset.nextUpdateAfter
-					|| currentTime <= dataset.nextUpdateBefore
+					currentTime >= snapshot.nextUpdateAfter
+					|| currentTime <= snapshot.nextUpdateBefore
 				) {
 					if(logger.isLoggable(Level.FINE)) {
-						logger.fine(
-							"Time for background update: currentTime=" + new Date(currentTime)
-							+ ", nextUpdateAfter=" + new Date(dataset.nextUpdateAfter)
-							+ ", nextUpdateBefore=" + new Date(dataset.nextUpdateBefore)
+						logger.fine("Time for background update: currentTime=" + new Date(currentTime)
+							+ ", nextUpdateAfter=" + new Date(snapshot.nextUpdateAfter)
+							+ ", nextUpdateBefore=" + new Date(snapshot.nextUpdateBefore)
 						);
 					}
 					// Reload from preferences, just in case another process has already updated
 					logger.fine("Reloading from preferences before beginning background update");
-					Dataset newDataset = Dataset.loadFromPreferences();
+					Snapshot newSnapshot = Snapshot.loadFromPreferences();
 					if(
-						newDataset != null
-						&& dataset.lastUpdatedTime != newDataset.lastUpdatedTime
-						&& currentTime < newDataset.nextUpdateAfter
-						&& currentTime > newDataset.nextUpdateBefore
+						newSnapshot != null
+						&& snapshot.lastUpdatedTime != newSnapshot.lastUpdatedTime
+						&& currentTime < newSnapshot.nextUpdateAfter
+						&& currentTime > newSnapshot.nextUpdateBefore
 					) {
-						// newDataset is valid, use it
+						// newSnapshot is valid, use it
 						logger.fine("Update from preferences is current, using it instead of beginning background update");
-						dataset = newDataset;
+						snapshot = newSnapshot;
 					} else {
 						// Begin background update
 						logger.fine("Spawning background update thread");
@@ -437,14 +478,14 @@ public class TopLevelDomain {
 										Reader in = new InputStreamReader(conn.getInputStream(), encoding);
 										try {
 											logger.fine("Reading top level domains from input");
-											Dataset loadedDataset = Dataset.loadFromReader(in, currentTime);
+											Snapshot loadedSnapshot = Snapshot.loadFromReader(in, currentTime);
 											synchronized(lock) {
-												dataset = loadedDataset;
+												snapshot = loadedSnapshot;
 												try {
 													logger.fine("Saving updated top level domains to preferences");
-													dataset.saveToPreferences();
+													snapshot.saveToPreferences();
 												} catch(BackingStoreException e) {
-													logger.log(Level.SEVERE, "Unable to save new dataset to preferences", e);
+													logger.log(Level.SEVERE, "Unable to save new snapshot to preferences", e);
 												}
 											}
 										} finally {
@@ -454,24 +495,24 @@ public class TopLevelDomain {
 									} catch(ThreadDeath td) {
 										throw td;
 									} catch(Throwable t) {
-										logger.log(Level.SEVERE, "Unable to load new dataset", t);
+										logger.log(Level.SEVERE, "Unable to load new snapshot", t);
 										try {
 											synchronized(lock) {
 												logger.fine("Saving failed update of top level domains to preferences");
-												dataset = new Dataset(
-													dataset.source,
+												snapshot = new Snapshot(
+													snapshot.source,
 													currentTime,
 													false,
-													dataset.lastSuccessfulUpdateTime
+													snapshot.lastSuccessfulUpdateTime
 												);
 												try {
-													dataset.saveToPreferences();
+													snapshot.saveToPreferences();
 												} catch(BackingStoreException e) {
-													logger.log(Level.SEVERE, "Unable to save new dataset to preferences", e);
+													logger.log(Level.SEVERE, "Unable to save new snapshot to preferences", e);
 												}
 											}
 										} catch(IOException e) {
-											logger.log(Level.SEVERE, "Unable to update existing dataset to unsuccessful", e);
+											logger.log(Level.SEVERE, "Unable to update existing snapshot to unsuccessful", e);
 										}
 									} finally {
 										synchronized(lock) {
@@ -487,7 +528,7 @@ public class TopLevelDomain {
 					}
 				}
 			}
-			return dataset;
+			return snapshot;
 		}
 	}
 
@@ -498,40 +539,55 @@ public class TopLevelDomain {
 	 * <p>
 	 * Each element is {@link String#intern() interned}.
 	 * </p>
+	 *
+	 * @see  Snapshot#getTopLevelDomains()
+	 * @see  #getSnapshot()
 	 */
 	public static List<String> getTopLevelDomains() {
-		return getDataset().topLevelDomains;
+		return getSnapshot().getTopLevelDomains();
 	}
 
 	/**
 	 * Gets an unmodifiable list of the comments contained within
 	 * <a href="https://data.iana.org/TLD/tlds-alpha-by-domain.txt">tlds-alpha-by-domain.txt</a>.
 	 * All lines starting with {@code "#"} are considered to be comments.
+	 *
+	 * @see  Snapshot#getComments()
+	 * @see  #getSnapshot()
 	 */
 	public static List<String> getComments() {
-		return getDataset().comments;
+		return getSnapshot().getComments();
 	}
 
 	/**
 	 * Gets the last time the list was updated, whether
 	 * successful or not.
+	 *
+	 * @see  Snapshot#getLastUpdatedTime()
+	 * @see  #getSnapshot()
 	 */
 	public static long getLastUpdatedTime() {
-		return getDataset().lastUpdatedTime;
+		return getSnapshot().getLastUpdatedTime();
 	}
 
 	/**
 	 * Gets whether the last update was successful.
+	 *
+	 * @see  Snapshot#getLastUpdateSuccessful()
+	 * @see  #getSnapshot()
 	 */
 	public static boolean getLastUpdateSuccessful() {
-		return getDataset().lastUpdateSuccessful;
+		return getSnapshot().getLastUpdateSuccessful();
 	}
 
 	/**
 	 * Gets the last time the list was successfully updated.
+	 *
+	 * @see  Snapshot#getLastSuccessfulUpdateTime()
+	 * @see  #getSnapshot()
 	 */
 	public static long getLastSuccessfulUpdateTime() {
-		return getDataset().lastSuccessfulUpdateTime;
+		return getSnapshot().getLastSuccessfulUpdateTime();
 	}
 
 	/**
@@ -541,9 +597,12 @@ public class TopLevelDomain {
 	 * </p>
 	 *
 	 * @return  The top level domain based on label (case-insensitive) or {@code null} if no match.
+	 *
+	 * @see  Snapshot#getByLabel(java.lang.String)
+	 * @see  #getSnapshot()
 	 */
 	public static String getByLabel(String label) {
-		return getDataset().lowerTldMap.get(label.toLowerCase(Locale.ROOT));
+		return getSnapshot().getByLabel(label);
 	}
 
 	/**
