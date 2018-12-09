@@ -1,6 +1,6 @@
 /*
  * ao-tlds - Self-updating Java API to get top-level domains.
- * Copyright (C) 2016, 2017  AO Industries, Inc.
+ * Copyright (C) 2016, 2017, 2018  AO Industries, Inc.
  *     support@aoindustries.com
  *     7262 Bull Pen Cir
  *     Mobile, AL 36695
@@ -51,7 +51,7 @@ import java.util.prefs.Preferences;
 /**
  * Provides access to the current top level domains.
  * As a fall-back, a copy of the top-level domain list is contained within this API.
- * The list is self-updated from data.iana.org.
+ * The list is self-updated from <a href="https://data.iana.org/TLD/tlds-alpha-by-domain.txt">data.iana.org</a>.
  * Updates are persisted via the Java Preferences API.
  *
  * @author  AO Industries, Inc.
@@ -63,8 +63,9 @@ public class TopLevelDomain {
 	/**
 	 * Hard-coded bootstrap data.  This is used when no download completed or possible.
 	 * This matches the bundled copy of tlds-alpha-by-domain.txt
+	 * <pre>date +%s000L -d "Sun Dec  9 07:07:01 2018 UTC"</pre>
 	 */
-	private static final long LAST_UPDATED = 1480986855000L; // 2016-12-05
+	private static final long LAST_UPDATED = 1544339221000L;
 
 	/**
 	 * In DEBUG mode, times are greatly shortened for testing.
