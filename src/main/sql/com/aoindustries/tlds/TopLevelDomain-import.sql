@@ -72,6 +72,7 @@ DROP TABLE "TopLevelDomain_import";
 INSERT INTO "com.aoindustries.tlds"."TopLevelDomain.Log" VALUES (
   now(),
   TRUE,
+  TRUE,
   now(),
   :'comments',
   :inserted - :delete_for_update,

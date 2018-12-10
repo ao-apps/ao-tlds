@@ -24,8 +24,14 @@
 CREATE TABLE "com.aoindustries.tlds"."TopLevelDomain.Log" (
   "lastUpdatedTime" timestamp with time zone
     PRIMARY KEY,
-  "lastUpdatedSuccessful" boolean
+  "isBootstrap" boolean
     NOT NULL,
+  "lastUpdatedSuccessful" boolean
+    NOT NULL
+    CHECK (
+      -- The bootstrap data must always be successful
+      (NOT "isBootstrap") OR "lastUpdatedSuccessful"
+    ),
   "lastSuccessfulUpdateTime" timestamp with time zone
     NOT NULL,
   comments text
@@ -41,17 +47,20 @@ CREATE TABLE "com.aoindustries.tlds"."TopLevelDomain.Log" (
 COMMENT ON TABLE "com.aoindustries.tlds"."TopLevelDomain.Log" IS
 'The auto-update history of the TopLevelDomain table';
 
-COMMENT ON COLUMN "com.aoindustries.tlds"."TopLevelDomain.Log".comments IS
-'The comments, joined by newlines when there is more than one comment';
-
 COMMENT ON COLUMN "com.aoindustries.tlds"."TopLevelDomain.Log"."lastUpdatedTime" IS
 'The last time the list was updated, whether successful or not';
+
+COMMENT ON COLUMN "com.aoindustries.tlds"."TopLevelDomain.Log"."isBootstrap" IS
+'Whether or not this is the bundled bootstrap data';
 
 COMMENT ON COLUMN "com.aoindustries.tlds"."TopLevelDomain.Log"."lastUpdatedSuccessful" IS
 'Whether the last update was successful';
 
 COMMENT ON COLUMN "com.aoindustries.tlds"."TopLevelDomain.Log"."lastSuccessfulUpdateTime" IS
 'The last time the list was successfully updated';
+
+COMMENT ON COLUMN "com.aoindustries.tlds"."TopLevelDomain.Log".comments IS
+'The comments, joined by newlines when there is more than one comment';
 
 COMMENT ON COLUMN "com.aoindustries.tlds"."TopLevelDomain.Log".inserted IS
 'The number of new top-level domains added';

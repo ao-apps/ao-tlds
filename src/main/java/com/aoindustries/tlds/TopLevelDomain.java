@@ -143,6 +143,8 @@ public class TopLevelDomain {
 
 		private final long lastUpdatedTime;
 
+		private final boolean isBootstrap;
+
 		private final boolean lastUpdateSuccessful;
 
 		private final long lastSuccessfulUpdateTime;
@@ -168,6 +170,7 @@ public class TopLevelDomain {
 		private Snapshot(
 			String source,
 			long lastUpdatedTime,
+			boolean isBootstrap,
 			boolean lastUpdateSuccessful,
 			long lastSuccessfulUpdateTime
 		) throws IOException {
@@ -190,6 +193,7 @@ public class TopLevelDomain {
 			this.topLevelDomains = Collections.unmodifiableList(newTopLevelDomains);
 			this.comments = Collections.unmodifiableList(newComments);
 			this.lastUpdatedTime = lastUpdatedTime;
+			this.isBootstrap = isBootstrap;
 			this.lastUpdateSuccessful = lastUpdateSuccessful;
 			this.lastSuccessfulUpdateTime = lastSuccessfulUpdateTime;
 			// Compute the MD5 sum
@@ -285,7 +289,7 @@ public class TopLevelDomain {
 				&& md5sum != null
 			) {
 				try {
-					Snapshot newSnapshot = new Snapshot(source, lastUpdatedTime, lastUpdateSuccessful, lastSuccessfulUpdateTime);
+					Snapshot newSnapshot = new Snapshot(source, lastUpdatedTime, false, lastUpdateSuccessful, lastSuccessfulUpdateTime);
 					if(!Arrays.equals(md5sum, newSnapshot.md5sum)) {
 						logger.log(Level.WARNING, "Unable to load top level domains from preferences, ignoring: md5sum mismatch");
 						return null;
@@ -310,7 +314,8 @@ public class TopLevelDomain {
 		 */
 		private static Snapshot loadFromReader(
 			Reader in,
-			long lastUpdatedTime
+			long lastUpdatedTime,
+			boolean isBootstrap
 		) throws IOException {
 			StringBuilder sb = new StringBuilder();
 			char[] buff = new char[4096];
@@ -318,7 +323,7 @@ public class TopLevelDomain {
 			while((numChars = in.read(buff)) != -1) {
 				sb.append(buff, 0, numChars);
 			}
-			return new Snapshot(sb.toString(), lastUpdatedTime, true, lastUpdatedTime);
+			return new Snapshot(sb.toString(), lastUpdatedTime, isBootstrap, true, lastUpdatedTime);
 		}
 
 		/**
@@ -364,6 +369,13 @@ public class TopLevelDomain {
 		 */
 		public long getLastUpdatedTime() {
 			return lastUpdatedTime;
+		}
+
+		/**
+		 * @see  TopLevelDomain#isBootstrap()
+		 */
+		public boolean isBootstrap() {
+			return isBootstrap;
 		}
 
 		/**
@@ -440,7 +452,7 @@ public class TopLevelDomain {
 					try {
 						Reader in = new InputStreamReader(TopLevelDomain.class.getResourceAsStream("tlds-alpha-by-domain.txt"), DATA_ENCODING);
 						try {
-							snapshot = Snapshot.loadFromReader(in, LAST_UPDATED);
+							snapshot = Snapshot.loadFromReader(in, LAST_UPDATED, true);
 						} finally {
 							in.close();
 						}
@@ -497,7 +509,7 @@ public class TopLevelDomain {
 										Reader in = new InputStreamReader(conn.getInputStream(), encoding);
 										try {
 											logger.fine("Reading top level domains from input");
-											Snapshot loadedSnapshot = Snapshot.loadFromReader(in, currentTime);
+											Snapshot loadedSnapshot = Snapshot.loadFromReader(in, currentTime, false);
 											synchronized(lock) {
 												snapshot = loadedSnapshot;
 												try {
@@ -521,6 +533,7 @@ public class TopLevelDomain {
 												snapshot = new Snapshot(
 													snapshot.source,
 													currentTime,
+													false,
 													false,
 													snapshot.lastSuccessfulUpdateTime
 												);
@@ -587,6 +600,18 @@ public class TopLevelDomain {
 	 */
 	public static long getLastUpdatedTime() {
 		return getSnapshot().getLastUpdatedTime();
+	}
+
+	/**
+	 * Gets whether or not this is the bundled bootstrap data.
+	 *
+	 * @return  {@code true} if this is the included bootstrap data, or {@code false} is this is auto-updated
+	 *
+	 * @see  Snapshot#isBootstrap()
+	 * @see  #getSnapshot()
+	 */
+	public static boolean isBootstrap() {
+		return getSnapshot().isBootstrap();
 	}
 
 	/**
