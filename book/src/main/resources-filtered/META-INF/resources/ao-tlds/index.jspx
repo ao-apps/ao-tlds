@@ -61,7 +61,7 @@ along with ao-tlds.  If not, see <http://www.gnu.org/licenses />.
 		<section:section label="Features">
 			<ul>
 				<li>Background self-updating from <ao:a href="https://data.iana.org/TLD/tlds-alpha-by-domain.txt">official iana.org source</ao:a>.</li>
-				<li>Stores updates in <ao:a href="http://docs.oracle.com/javase/6/docs/technotes/guides/preferences/">Java Preferences API</ao:a> to reduce queries of data.iana.org.</li>
+				<li>Stores updates in <ao:a href="https://docs.oracle.com/javase/6/docs/technotes/guides/preferences/">Java Preferences API</ao:a> to reduce queries of data.iana.org.</li>
 				<li>Small footprint, self-contained, no transitive dependencies - not part of a big monolithic package.</li>
 			</ul>
 		</section:section>
