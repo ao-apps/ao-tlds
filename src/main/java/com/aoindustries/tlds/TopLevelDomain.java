@@ -34,6 +34,8 @@ import java.net.URL;
 import java.net.URLConnection;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.text.DateFormat;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -416,8 +418,26 @@ public class TopLevelDomain {
 				logger.fine("Trying to load from preferences");
 				snapshot = Snapshot.loadFromPreferences();
 				// Use hard-coded bootstrap
-				if(snapshot == null) {
-					logger.info("Update not found in preferences, using hard-coded bootstrap");
+				if(snapshot == null || snapshot.lastSuccessfulUpdateTime < LAST_UPDATED) {
+					if(logger.isLoggable(Level.INFO)) {
+						DateFormat dateFormat = DateFormat.getDateTimeInstance();
+						if(snapshot == null) {
+							logger.info(
+								"Update not found in preferences, using hard-coded bootstrap dated \""
+								+ dateFormat.format(new Date(LAST_UPDATED))
+								+ "\""
+							);
+						} else {
+							assert snapshot.lastSuccessfulUpdateTime < LAST_UPDATED;
+							logger.info(
+								"Update from preferences dated \""
+								+ dateFormat.format(new Date(snapshot.lastSuccessfulUpdateTime))
+								+ "\" is older than hard-coded bootstrap dated \""
+								+ dateFormat.format(new Date(LAST_UPDATED))
+								+ "\", using hard-coded bootstrap instead"
+							);
+						}
+					}
 					try {
 						Reader in = new InputStreamReader(TopLevelDomain.class.getResourceAsStream("tlds-alpha-by-domain.txt"), DATA_ENCODING);
 						try {
@@ -426,7 +446,7 @@ public class TopLevelDomain {
 							in.close();
 						}
 					} catch(IOException e) {
-						throw new RuntimeException("Unable to load bootstreap top level domains", e);
+						throw new RuntimeException("Unable to load bootstrap top level domains", e);
 					}
 				} else {
 					logger.fine("Successfully loaded from preferences");

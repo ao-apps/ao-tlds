@@ -37,7 +37,7 @@ along with ao-tlds.  If not, see <http://www.gnu.org/licenses />.
 		shortTitle="Changelog"
 		tocLevels="1"
 		datePublished="2016-12-12T14:20:29-0600"
-		dateModified="2018-12-09T19:17:45-0600"
+		dateModified="2018-12-09T19:50:17-0600"
 	>
 		<!-- The current snapshot, unreleased version -->
 		<c:set var="version" value="@{com.aoindustries:ao-tlds:pom.version}" />
@@ -62,6 +62,11 @@ along with ao-tlds.  If not, see <http://www.gnu.org/licenses />.
 						against a single moment-in-time representation of the list.
 					</li>
 					<li>Added SQL implementation in alternate "sql" classifier.</li>
+					<li>
+						Now using bundled bootstrap top-level domain list when it is newer than the version from preferences.
+						This can occur when a system that was able to auto-update in the past, but is currently unable to,
+						gets updated to a newer version of <code>ao-tlds</code>.
+					</li>
 				</ul>
 			</changelog:release>
 		</c:if>
