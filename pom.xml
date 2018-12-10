@@ -45,6 +45,50 @@ along with ao-tlds.  If not, see <http://www.gnu.org/licenses />.
 		<tag>HEAD</tag>
 	</scm>
 
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId><artifactId>maven-resources-plugin</artifactId>
+				<executions>
+					<execution>
+						<id>sql-resources</id>
+						<phase>process-resources</phase>
+						<goals>
+							<goal>copy-resources</goal>
+						</goals>
+						<configuration>
+							<resources>
+								<resource>
+									<directory>src/main/sql</directory>
+								</resource>
+							</resources>
+							<outputDirectory>${project.build.directory}/sql</outputDirectory>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId><artifactId>maven-jar-plugin</artifactId>
+				<executions>
+					<execution>
+						<phase>package</phase>
+						<goals>
+							<goal>jar</goal>
+						</goals>
+						<configuration>
+							<classesDirectory>${project.build.directory}/sql</classesDirectory>
+							<!-- Could pull directly from source, without above sql-resources,
+							     but this seems to match Maven style better:
+							<classesDirectory>src/main/sql</classesDirectory>
+							-->
+							<classifier>sql</classifier>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+		</plugins>
+	</build>
+
 	<dependencies>
 		<dependency>
 			<groupId>junit</groupId><artifactId>junit</artifactId>

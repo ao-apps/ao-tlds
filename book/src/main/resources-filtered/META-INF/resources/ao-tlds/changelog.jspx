@@ -37,7 +37,7 @@ along with ao-tlds.  If not, see <http://www.gnu.org/licenses />.
 		shortTitle="Changelog"
 		tocLevels="1"
 		datePublished="2016-12-12T14:20:29-0600"
-		dateModified="2018-12-09T15:19:47-0600"
+		dateModified="2018-12-09T19:17:45-0600"
 	>
 		<!-- The current snapshot, unreleased version -->
 		<c:set var="version" value="@{com.aoindustries:ao-tlds:pom.version}" />
@@ -61,6 +61,7 @@ along with ao-tlds.  If not, see <http://www.gnu.org/licenses />.
 						and its meta-data.  This is useful when multiple operations need to be performed
 						against a single moment-in-time representation of the list.
 					</li>
+					<li>Added SQL implementation in alternate "sql" classifier.</li>
 				</ul>
 			</changelog:release>
 		</c:if>
