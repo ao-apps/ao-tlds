@@ -66,7 +66,7 @@ SELECT COUNT(*) AS inserted FROM inserted \gset
 DROP TABLE "TopLevelDomain_import";
 
 -- Gets the comments skipped in tlds-alpha-by-domain.txt during import
-\set comments `sed -rn 's/^#[[:space:]]*(.*)$/\1/p' tlds-alpha-by-domain.txt`
+\set comments `grep '^#' tlds-alpha-by-domain.txt`
 
 -- Add Log entry
 INSERT INTO "com.aoindustries.tlds"."TopLevelDomain.Log" VALUES (
