@@ -24,7 +24,7 @@
 CREATE EXTENSION IF NOT EXISTS citext;
 
 CREATE TABLE "com.aoindustries.tlds"."TopLevelDomain" (
-  label CITEXT PRIMARY KEY
+  label citext PRIMARY KEY
 );
 
 COMMENT ON COLUMN "com.aoindustries.tlds"."TopLevelDomain".label IS
