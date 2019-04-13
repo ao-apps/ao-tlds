@@ -36,7 +36,7 @@ along with ao-tlds.  If not, see <http://www.gnu.org/licenses />.
 		dateModified="2017-07-18T19:24:16-0500"
 	>
 		<core:child page="changelog.jspx" />
-		<core:child page="apidocs/" />
+		<core:child page="apidocs/index.jspx" />
 		<ao:include
 			page="/ao-badges/badges.inc.jspx"
 			arg.projectStatus="${currentPage.property.projectStatus}"
