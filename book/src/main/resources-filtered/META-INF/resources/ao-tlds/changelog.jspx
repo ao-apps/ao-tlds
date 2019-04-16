@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--
 ao-tlds - Self-updating Java API to get top-level domains.
-Copyright (C) 2016, 2017, 2018  AO Industries, Inc.
+Copyright (C) 2016, 2017, 2018, 2019  AO Industries, Inc.
     support@aoindustries.com
     7262 Bull Pen Cir
     Mobile, AL 36695
@@ -45,7 +45,7 @@ along with ao-tlds.  If not, see <http://www.gnu.org/licenses />.
 			test="${!fn:startsWith(version, '@')}"
 			message="Version not substituted: #{version}"
 		/>
-		<c:if test="${fn:endsWith(version, '-SNAPSHOT')}">
+		<c:if test="${fn:endsWith(version, '-SNAPSHOT') and !fn:endsWith(version, '-validation-SNAPSHOT')}">
 			<changelog:release
 				projectName="@{documented.name}"
 				version="#{version}"
