@@ -37,7 +37,7 @@ along with ao-tlds.  If not, see <http://www.gnu.org/licenses />.
 		shortTitle="Changelog"
 		tocLevels="1"
 		datePublished="2016-12-12T14:20:29-0600"
-		dateModified="2019-04-22T20:25:24-0500"
+		dateModified="2019-04-22T20:29:55-0500"
 	>
 		<!-- The current snapshot, unreleased version -->
 		<c:set var="version" value="@{com.aoindustries:ao-tlds:pom.version}" />
@@ -55,7 +55,7 @@ along with ao-tlds.  If not, see <http://www.gnu.org/licenses />.
 			>
 				<ul>
 					<li>Minimum Java version changed from 1.6 to 1.7.</li>
-					<li>Updated bundled <code>tlds-alpha-by-domain.txt</code> to version <code>2018120900</code>.</li>
+					<li>Updated bundled <code>tlds-alpha-by-domain.txt</code> to version <code>2019042200</code>.</li>
 					<li>
 						Exposed <ao:a href="apidocs/com/aoindustries/tlds/TopLevelDomain.Snapshot.html">TopLevelDomain.Snapshot</ao:a>,
 						which is the mechanism used to represent a single moment-in-time for both the list
