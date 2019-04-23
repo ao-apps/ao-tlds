@@ -1,6 +1,6 @@
 /*
  * ao-tlds - Self-updating Java API to get top-level domains.
- * Copyright (C) 2016, 2017, 2018  AO Industries, Inc.
+ * Copyright (C) 2016, 2017, 2018, 2019  AO Industries, Inc.
  *     support@aoindustries.com
  *     7262 Bull Pen Cir
  *     Mobile, AL 36695
@@ -175,8 +175,8 @@ public class TopLevelDomain {
 			long lastSuccessfulUpdateTime
 		) throws IOException {
 			this.source = source;
-			ArrayList<String> newTopLevelDomains = new ArrayList<String>();
-			ArrayList<String> newComments = new ArrayList<String>();
+			ArrayList<String> newTopLevelDomains = new ArrayList<>();
+			ArrayList<String> newComments = new ArrayList<>();
 			{
 				BufferedReader in = new BufferedReader(new StringReader(source));
 				String line;
@@ -199,22 +199,17 @@ public class TopLevelDomain {
 			// Compute the MD5 sum
 			{
 				ByteArrayOutputStream bout = new ByteArrayOutputStream();
-				DataOutputStream out = new DataOutputStream(bout);
-				try {
+				try (DataOutputStream out = new DataOutputStream(bout)) {
 					out.write(source.getBytes("UTF-8"));
 					out.writeLong(lastUpdatedTime);
 					out.writeBoolean(lastUpdateSuccessful);
 					out.writeLong(lastSuccessfulUpdateTime);
-				} finally {
-					out.close();
 				}
 				try {
 					MessageDigest md = MessageDigest.getInstance("MD5");
 					this.md5sum = md.digest(bout.toByteArray());
 				} catch(NoSuchAlgorithmException e) {
-					AssertionError ae = new AssertionError("MD5 is expected to be available on all platforms");
-					ae.initCause(e);
-					throw ae;
+					throw new AssertionError("MD5 is expected to be available on all platforms", e);
 				}
 			}
 			// Random next update time
@@ -241,7 +236,7 @@ public class TopLevelDomain {
 			}
 			// Compute lowerTldMap
 			{
-				lowerTldMap = new HashMap<String,String>(topLevelDomains.size()*4/3+1);
+				lowerTldMap = new HashMap<>(topLevelDomains.size()*4/3+1);
 				for(String tld : topLevelDomains) lowerTldMap.put(tld.toLowerCase(Locale.ROOT).intern(), tld);
 			}
 		}
@@ -296,10 +291,7 @@ public class TopLevelDomain {
 					}
 					logger.fine("Successful load from preferences");
 					return newSnapshot;
-				} catch(RuntimeException e) {
-					logger.log(Level.SEVERE, "Unable to load top level domains from preferences", e);
-					return null;
-				} catch(IOException e) {
+				} catch(RuntimeException | IOException e) {
 					logger.log(Level.SEVERE, "Unable to load top level domains from preferences", e);
 					return null;
 				}
@@ -450,11 +442,8 @@ public class TopLevelDomain {
 						}
 					}
 					try {
-						Reader in = new InputStreamReader(TopLevelDomain.class.getResourceAsStream("tlds-alpha-by-domain.txt"), DATA_ENCODING);
-						try {
+						try (Reader in = new InputStreamReader(TopLevelDomain.class.getResourceAsStream("tlds-alpha-by-domain.txt"), DATA_ENCODING)) {
 							snapshot = Snapshot.loadFromReader(in, LAST_UPDATED, true);
-						} finally {
-							in.close();
 						}
 					} catch(IOException e) {
 						throw new RuntimeException("Unable to load bootstrap top level domains", e);
