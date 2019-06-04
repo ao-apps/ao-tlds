@@ -37,7 +37,7 @@ along with ao-tlds.  If not, see <http://www.gnu.org/licenses />.
 		shortTitle="Changelog"
 		tocLevels="1"
 		datePublished="2016-12-12T14:20:29-0600"
-		dateModified="2019-04-22T20:39:26-0500"
+		dateModified="2019-06-04T17:22:50-0500"
 	>
 		<!-- The current snapshot, unreleased version -->
 		<c:set var="version" value="@{com.aoindustries:ao-tlds:pom.version}" />
@@ -52,7 +52,17 @@ along with ao-tlds.  If not, see <http://www.gnu.org/licenses />.
 				groupId="@{documented.groupId}"
 				artifactId="@{documented.artifactId}"
 				scmUrl="@{documented.scm.url}"
-			/>
+			>
+				<ul>
+					<li>Updated version of <core:link book="/ao-oss-parent" page="/index.jspx" />.</li>
+					<li>Using managed dependencies:
+						<ol>
+							<li>This project uses transitive managed dependencies.</li>
+							<li>This project's managed dependencies may also be imported by other projects.</li>
+						</ol>
+					</li>
+				</ul>
+			</changelog:release>
 		</c:if>
 
 		<changelog:release
