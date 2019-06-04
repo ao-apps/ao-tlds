@@ -53,7 +53,7 @@ import java.util.prefs.Preferences;
  * Provides access to the current top level domains.
  * As a fall-back, a copy of the top-level domain list is bundled within this API.
  * The list is self-updated from <a href="https://data.iana.org/TLD/tlds-alpha-by-domain.txt">data.iana.org</a>.
- * Updates are persisted via the <a href="https://docs.oracle.com/javase/6/docs/technotes/guides/preferences/">Java Preferences API</a>.
+ * Updates are persisted via the <a href="https://docs.oracle.com/javase/7/docs/technotes/guides/preferences/">Java Preferences API</a>.
  *
  * @author  AO Industries, Inc.
  */

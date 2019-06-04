@@ -33,7 +33,7 @@ along with ao-tlds.  If not, see <http://www.gnu.org/licenses />.
 		title="@{documented.name}"
 		description="@{documented.description}"
 		datePublished="2016-12-05T18:27:49-0600"
-		dateModified="2019-06-01T18:51:51-0500"
+		dateModified="2019-06-03T21:55:30-0500"
 	>
 		<core:child page="changelog.jspx" />
 		<core:child page="apidocs/index.jspx" />
@@ -63,7 +63,7 @@ along with ao-tlds.  If not, see <http://www.gnu.org/licenses />.
 		<section:section label="Features">
 			<ul>
 				<li>Background self-updating from <ao:a href="https://data.iana.org/TLD/tlds-alpha-by-domain.txt">official iana.org source</ao:a>.</li>
-				<li>Stores updates in <ao:a href="https://docs.oracle.com/javase/6/docs/technotes/guides/preferences/">Java Preferences API</ao:a> to reduce queries of data.iana.org.</li>
+				<li>Stores updates in <ao:a href="https://docs.oracle.com/javase/7/docs/technotes/guides/preferences/">Java Preferences API</ao:a> to reduce queries of data.iana.org.</li>
 				<li>Small footprint, self-contained, no transitive dependencies - not part of a big monolithic package.</li>
 			</ul>
 		</section:section>

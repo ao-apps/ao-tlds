@@ -32,7 +32,7 @@ Self-updating Java API to get top-level domains.
 
 ## Features
 * Background self-updating from [official iana.org source](https://data.iana.org/TLD/tlds-alpha-by-domain.txt).
-* Stores updates in [Java Preferences API](https://docs.oracle.com/javase/6/docs/technotes/guides/preferences/) to reduce queries of data.iana.org.
+* Stores updates in [Java Preferences API](https://docs.oracle.com/javase/7/docs/technotes/guides/preferences/) to reduce queries of data.iana.org.
 * Small footprint, self-contained, no transitive dependencies - not part of a big monolithic package.
 
 ## Motivation
