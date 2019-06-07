@@ -89,8 +89,18 @@ along with ao-tlds.  If not, see <http://www.gnu.org/licenses />.
 		</plugins>
 	</build>
 
+	<dependencyManagement>
+		<dependencies>
+			<!-- Test -->
+			<dependency>
+				<groupId>junit</groupId><artifactId>junit</artifactId><version>4.12</version>
+			</dependency>
+		</dependencies>
+	</dependencyManagement>
+
 	<dependencies>
 		<dependency>
+			<!-- Test -->
 			<groupId>junit</groupId><artifactId>junit</artifactId>
 			<scope>test</scope>
 		</dependency>
