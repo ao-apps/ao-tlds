@@ -107,6 +107,7 @@ along with ao-tlds.  If not, see <http://www.gnu.org/licenses />.
 			<type>pom</type>
 			<scope>provided</scope>
 			<optional>true</optional>
+			<exclusions><exclusion><groupId>*</groupId><artifactId>*</artifactId></exclusion></exclusions>
 		</dependency>
 	</dependencies>
 </project>
