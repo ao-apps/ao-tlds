@@ -36,7 +36,7 @@ along with ao-tlds.  If not, see <http://www.gnu.org/licenses />.
 		shortTitle="Changelog"
 		tocLevels="1"
 		datePublished="2016-12-12T14:20:29-0600"
-		dateModified="2019-06-21T03:25:51-0500"
+		dateModified="2019-08-16T23:22:52-0500"
 	>
 		<!-- The current snapshot, unreleased version -->
 		<c:set var="version" value="@{com.aoindustries:ao-tlds:pom.version}" />
@@ -51,7 +51,11 @@ along with ao-tlds.  If not, see <http://www.gnu.org/licenses />.
 				groupId="@{documented.groupId}"
 				artifactId="@{documented.artifactId}"
 				scmUrl="@{documented.scm.url}"
-			/>
+			>
+				<ul>
+					<li>Using <code>java.nio.charset.StandardCharsets</code> instead of <code>"UTF-8"</code>.</li>
+				</ul>
+			</changelog:release>
 		</c:if>
 
 		<changelog:release

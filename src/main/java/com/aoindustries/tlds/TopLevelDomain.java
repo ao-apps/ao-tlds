@@ -32,6 +32,8 @@ import java.io.StringReader;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLConnection;
+import java.nio.charset.Charset;
+import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.text.DateFormat;
@@ -88,7 +90,7 @@ public class TopLevelDomain {
 	/**
 	 * The default encoding for the data url.
 	 */
-	private static final String DATA_ENCODING = "UTF-8";
+	private static final Charset DATA_ENCODING = StandardCharsets.UTF_8;
 
 	/**
 	 * One snapshot of the data, representing the state at one moment in time.
@@ -200,7 +202,7 @@ public class TopLevelDomain {
 			{
 				ByteArrayOutputStream bout = new ByteArrayOutputStream();
 				try (DataOutputStream out = new DataOutputStream(bout)) {
-					out.write(source.getBytes("UTF-8"));
+					out.write(source.getBytes(DATA_ENCODING));
 					out.writeLong(lastUpdatedTime);
 					out.writeBoolean(lastUpdateSuccessful);
 					out.writeLong(lastSuccessfulUpdateTime);
@@ -490,7 +492,7 @@ public class TopLevelDomain {
 										String encoding = conn.getContentEncoding();
 										if(encoding == null) {
 											logger.fine("Did not get encoding, assuming encoding: " + DATA_ENCODING);
-											encoding = DATA_ENCODING;
+											encoding = DATA_ENCODING.name();
 										} else {
 											if(logger.isLoggable(Level.FINE)) logger.fine("Got encoding: " + encoding);
 										}
@@ -512,10 +514,8 @@ public class TopLevelDomain {
 											logger.fine("Closing input");
 											in.close();
 										}
-									} catch(ThreadDeath td) {
-										throw td;
-									} catch(Throwable t) {
-										logger.log(Level.SEVERE, "Unable to load new snapshot", t);
+									} catch(RuntimeException | IOException e) {
+										logger.log(Level.SEVERE, "Unable to load new snapshot", e);
 										try {
 											synchronized(lock) {
 												logger.fine("Saving failed update of top level domains to preferences");
@@ -528,12 +528,12 @@ public class TopLevelDomain {
 												);
 												try {
 													snapshot.saveToPreferences();
-												} catch(BackingStoreException e) {
-													logger.log(Level.SEVERE, "Unable to save new snapshot to preferences", e);
+												} catch(BackingStoreException e2) {
+													logger.log(Level.SEVERE, "Unable to save new snapshot to preferences", e2);
 												}
 											}
-										} catch(IOException e) {
-											logger.log(Level.SEVERE, "Unable to update existing snapshot to unsuccessful", e);
+										} catch(IOException e2) {
+											logger.log(Level.SEVERE, "Unable to update existing snapshot to unsuccessful", e2);
 										}
 									} finally {
 										synchronized(lock) {
