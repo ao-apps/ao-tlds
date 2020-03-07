@@ -44,7 +44,7 @@ along with ao-tlds.  If not, see <http://www.gnu.org/licenses />.
 				arg.projectStatus="current-stable"
 				arg.managementStatus="production"
 				arg.packagingStatus="active"
-				arg.javaVersion="@{documented.javaVersion}"
+				arg.javaseVersion="@{documented.javase.version}"
 				arg.semanticVersioning="2.0.0"
 				arg.license="lgpl-3.0"
 			/>

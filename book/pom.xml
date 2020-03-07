@@ -35,8 +35,6 @@ along with ao-tlds.  If not, see <http://www.gnu.org/licenses />.
 	<properties>
 		<!-- These values are copied from the project being documented -->
 		<documented.artifactId>ao-tlds</documented.artifactId>
-		<documented.javaVersion>1.7</documented.javaVersion>
-		<documented.javac.link.javaApi>${javac.link.javaApi.jdk7}</documented.javac.link.javaApi>
 		<documented.name>AO TLDs</documented.name>
 		<documented.description>Self-updating Java API to get top-level domains.</documented.description>
 
