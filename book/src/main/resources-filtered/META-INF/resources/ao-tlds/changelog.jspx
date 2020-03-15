@@ -37,7 +37,7 @@ along with ao-tlds.  If not, see <http://www.gnu.org/licenses />.
 		shortTitle="Changelog"
 		tocLevels="1"
 		datePublished="2016-12-12T14:20:29-0600"
-		dateModified="2020-03-07T08:38:21-0600"
+		dateModified="2020-03-15T00:27:10-05:00"
 	>
 		<!-- The current snapshot, unreleased version -->
 		<c:set var="version" value="@{com.aoindustries:ao-tlds:pom.version}" />
@@ -59,6 +59,7 @@ along with ao-tlds.  If not, see <http://www.gnu.org/licenses />.
 						Reduced use of property substitutions in <code>pom.xml</code>.
 						This is to help 3rd-party parsers that fail to perform full Maven-compatible substitutions.
 					</li>
+					<li>Updated dependencies.</li>
 				</ul>
 			</changelog:release>
 		</c:if>
