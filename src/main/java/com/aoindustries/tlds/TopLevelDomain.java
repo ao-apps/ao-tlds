@@ -1,6 +1,6 @@
 /*
  * ao-tlds - Self-updating Java API to get top-level domains.
- * Copyright (C) 2016, 2017, 2018, 2019  AO Industries, Inc.
+ * Copyright (C) 2016, 2017, 2018, 2019, 2020  AO Industries, Inc.
  *     support@aoindustries.com
  *     7262 Bull Pen Cir
  *     Mobile, AL 36695
@@ -483,63 +483,60 @@ public class TopLevelDomain {
 						// Begin background update
 						logger.fine("Spawning background update thread");
 						updateThread = new Thread(
-							new Runnable() {
-								@Override
-								public void run() {
+							() -> {
+								try {
+									logger.fine("Connecting to " + DATA_URL);
+									URLConnection conn = DATA_URL.openConnection();
+									String encoding = conn.getContentEncoding();
+									if(encoding == null) {
+										logger.fine("Did not get encoding, assuming encoding: " + DATA_ENCODING);
+										encoding = DATA_ENCODING.name();
+									} else {
+										if(logger.isLoggable(Level.FINE)) logger.fine("Got encoding: " + encoding);
+									}
+									logger.fine("Getting input");
+									Reader in = new InputStreamReader(conn.getInputStream(), encoding);
 									try {
-										logger.fine("Connecting to " + DATA_URL);
-										URLConnection conn = DATA_URL.openConnection();
-										String encoding = conn.getContentEncoding();
-										if(encoding == null) {
-											logger.fine("Did not get encoding, assuming encoding: " + DATA_ENCODING);
-											encoding = DATA_ENCODING.name();
-										} else {
-											if(logger.isLoggable(Level.FINE)) logger.fine("Got encoding: " + encoding);
-										}
-										logger.fine("Getting input");
-										Reader in = new InputStreamReader(conn.getInputStream(), encoding);
-										try {
-											logger.fine("Reading top level domains from input");
-											Snapshot loadedSnapshot = Snapshot.loadFromReader(in, currentTime, false);
-											synchronized(lock) {
-												snapshot = loadedSnapshot;
-												try {
-													logger.fine("Saving updated top level domains to preferences");
-													snapshot.saveToPreferences();
-												} catch(BackingStoreException e) {
-													logger.log(Level.SEVERE, "Unable to save new snapshot to preferences", e);
-												}
+										logger.fine("Reading top level domains from input");
+										Snapshot loadedSnapshot = Snapshot.loadFromReader(in, currentTime, false);
+										synchronized(lock) {
+											snapshot = loadedSnapshot;
+											try {
+												logger.fine("Saving updated top level domains to preferences");
+												snapshot.saveToPreferences();
+											} catch(BackingStoreException e) {
+												logger.log(Level.SEVERE, "Unable to save new snapshot to preferences", e);
 											}
-										} finally {
-											logger.fine("Closing input");
-											in.close();
-										}
-									} catch(RuntimeException | IOException e) {
-										logger.log(Level.SEVERE, "Unable to load new snapshot", e);
-										try {
-											synchronized(lock) {
-												logger.fine("Saving failed update of top level domains to preferences");
-												snapshot = new Snapshot(
-													snapshot.source,
-													currentTime,
-													false,
-													false,
-													snapshot.lastSuccessfulUpdateTime
-												);
-												try {
-													snapshot.saveToPreferences();
-												} catch(BackingStoreException e2) {
-													logger.log(Level.SEVERE, "Unable to save new snapshot to preferences", e2);
-												}
-											}
-										} catch(IOException e2) {
-											logger.log(Level.SEVERE, "Unable to update existing snapshot to unsuccessful", e2);
 										}
 									} finally {
+										logger.fine("Closing input");
+										in.close();
+									}
+								} catch(RuntimeException | IOException e) {
+									logger.log(Level.SEVERE, "Unable to load new snapshot", e);
+									try {
 										synchronized(lock) {
-											updateThread = null;
-											lock.notifyAll();
+											logger.fine("Saving failed update of top level domains to preferences");
+											snapshot = new Snapshot(
+												snapshot.source,
+												currentTime,
+												false,
+												false,
+												snapshot.lastSuccessfulUpdateTime
+											);
+											try {
+												snapshot.saveToPreferences();
+											} catch(BackingStoreException e2) {
+												logger.log(Level.SEVERE, "Unable to save new snapshot to preferences", e2);
+											}
 										}
+									} catch(IOException e2) {
+										logger.log(Level.SEVERE, "Unable to update existing snapshot to unsuccessful", e2);
+									}
+								} finally {
+									synchronized(lock) {
+										updateThread = null;
+										lock.notifyAll();
 									}
 								}
 							},
