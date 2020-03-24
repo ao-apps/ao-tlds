@@ -27,7 +27,7 @@ Self-updating Java API to get top-level domains.
 * [Project Home](https://aoindustries.com/ao-tlds/)
 * [Changelog](https://aoindustries.com/ao-tlds/changelog)
 * [API Docs](https://aoindustries.com/ao-tlds/apidocs/)
-* [Maven Central Repository](https://search.maven.org/#search%7Cgav%7C1%7Cg:%22com.aoindustries%22%20AND%20a:%22ao-tlds%22)
+* [Maven Central Repository](https://search.maven.org/artifact/com.aoindustries/ao-tlds)
 * [GitHub](https://github.com/aoindustries/ao-tlds)
 
 ## Features
