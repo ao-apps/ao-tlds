@@ -75,6 +75,7 @@ along with ao-tlds.  If not, see <http://www.gnu.org/licenses />.
 				<groupId>org.apache.maven.plugins</groupId><artifactId>maven-jar-plugin</artifactId>
 				<executions>
 					<execution>
+						<id>sql-jar</id>
 						<phase>package</phase>
 						<goals>
 							<goal>jar</goal>
