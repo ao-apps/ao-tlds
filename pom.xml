@@ -50,6 +50,22 @@ along with ao-tlds.  If not, see <http://www.gnu.org/licenses />.
 	</issueManagement>
 
 	<build>
+		<resources>
+			<!-- Default Resources -->
+			<resource>
+				<directory>src/main/resources</directory>
+			</resource>
+			<resource>
+				<directory>src/main/resources-filtered</directory>
+				<filtering>true</filtering>
+			</resource>
+			<!-- Additional Resources -->
+			<resource>
+				<directory>src/main/sql</directory>
+				<!-- Packaged as "sql" artifact below -->
+				<excludes><exclude>**</exclude></excludes>
+			</resource>
+		</resources>
 		<plugins>
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId><artifactId>maven-resources-plugin</artifactId>
