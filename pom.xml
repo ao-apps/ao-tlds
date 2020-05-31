@@ -116,13 +116,40 @@ along with ao-tlds.  If not, see <http://www.gnu.org/licenses />.
 			<build>
 				<plugins>
 					<plugin>
+						<groupId>org.apache.maven.plugins</groupId><artifactId>maven-dependency-plugin</artifactId>
+						<executions>
+							<execution>
+								<id>unpack.offlinkLinks</id>
+								<phase>generate-sources</phase>
+								<goals><goal>unpack</goal></goals>
+								<configuration>
+									<artifactItems>
+										<!-- Test Direct -->
+										<artifactItem>
+											<groupId>junit</groupId><artifactId>junit</artifactId>
+											<classifier>javadoc</classifier><includes>element-list, package-list</includes>
+											<outputDirectory>${project.build.directory}/offlineLinks/junit/junit</outputDirectory>
+										</artifactItem>
+									</artifactItems>
+								</configuration>
+							</execution>
+						</executions>
+					</plugin>
+					<plugin>
 						<groupId>org.apache.maven.plugins</groupId><artifactId>maven-javadoc-plugin</artifactId>
 						<configuration>
 							<links>
 								<link>${javadoc.link.javase}</link>
 								<!-- Test Direct -->
-								<link>https://junit.org/junit4/javadoc/latest/</link>
+								<!-- offlineLink: <groupId>junit</groupId><artifactId>junit</artifactId> -->
 							</links>
+							<offlineLinks>
+								<!-- Test Direct -->
+								<offlineLink>
+									<url>https://junit.org/junit4/javadoc/latest/</url>
+									<location>${project.build.directory}/offlineLinks/junit/junit</location>
+								</offlineLink>
+							</offlineLinks>
 						</configuration>
 					</plugin>
 				</plugins>
