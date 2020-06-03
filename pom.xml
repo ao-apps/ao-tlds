@@ -71,11 +71,7 @@ along with ao-tlds.  If not, see <http://www.gnu.org/licenses />.
 				<groupId>org.apache.maven.plugins</groupId><artifactId>maven-resources-plugin</artifactId>
 				<executions>
 					<execution>
-						<id>sql-resources</id>
-						<phase>process-resources</phase>
-						<goals>
-							<goal>copy-resources</goal>
-						</goals>
+						<id>sql-resources</id><phase>process-resources</phase><goals><goal>copy-resources</goal></goals>
 						<configuration>
 							<resources>
 								<resource>
@@ -91,11 +87,7 @@ along with ao-tlds.  If not, see <http://www.gnu.org/licenses />.
 				<groupId>org.apache.maven.plugins</groupId><artifactId>maven-jar-plugin</artifactId>
 				<executions>
 					<execution>
-						<id>sql-jar</id>
-						<phase>package</phase>
-						<goals>
-							<goal>jar</goal>
-						</goals>
+						<id>sql-jar</id><phase>package</phase><goals><goal>jar</goal></goals>
 						<configuration>
 							<classesDirectory>${project.build.directory}/sql</classesDirectory>
 							<!-- Could pull directly from source, without above sql-resources,
@@ -112,27 +104,16 @@ along with ao-tlds.  If not, see <http://www.gnu.org/licenses />.
 
 	<profiles>
 		<profile>
-			<id>release</id>
+			<id>offlineLinks</id><activation><file><exists>src/main/java</exists></file></activation>
 			<build>
 				<plugins>
 					<plugin>
 						<groupId>org.apache.maven.plugins</groupId><artifactId>maven-dependency-plugin</artifactId>
-						<dependencies>
-							<dependency>
-								<groupId>com.aoindustries</groupId><artifactId>ao-javadoc-offline</artifactId><version>1.0.0-SNAPSHOT<!-- ${POST-SNAPSHOT} --></version>
-							</dependency>
-						</dependencies>
 						<executions>
 							<execution>
-								<id>unpack.offlinkLinks</id><phase>generate-sources</phase><goals><goal>unpack</goal></goals>
+								<id>unpack.offlineLinks</id><phase>generate-sources</phase><goals><goal>unpack</goal></goals>
 								<configuration>
-									<silent>true</silent>
 									<artifactItems>
-										<artifactItem>
-											<groupId>com.aoindustries</groupId><artifactId>ao-javadoc-offline</artifactId><version>1.0.0-SNAPSHOT<!-- ${POST-SNAPSHOT} --></version>
-											<includes>**/element-list, **/package-list</includes>
-											<outputDirectory>${project.build.directory}/offlineLinks</outputDirectory>
-										</artifactItem>
 										<!-- Test Direct -->
 										<artifactItem>
 											<groupId>junit</groupId><artifactId>junit</artifactId>
