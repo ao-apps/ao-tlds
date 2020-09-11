@@ -239,7 +239,9 @@ public class TopLevelDomain {
 			// Compute lowerTldMap
 			{
 				lowerTldMap = new HashMap<>(topLevelDomains.size()*4/3+1);
-				for(String tld : topLevelDomains) lowerTldMap.put(tld.toLowerCase(Locale.ROOT).intern(), tld);
+				for(String tld : topLevelDomains) {
+					lowerTldMap.put(tld.toLowerCase(Locale.ROOT).intern(), tld);
+				}
 			}
 		}
 
@@ -350,6 +352,7 @@ public class TopLevelDomain {
 		/**
 		 * @see  TopLevelDomain#getTopLevelDomains()
 		 */
+		@SuppressWarnings("ReturnOfCollectionOrArrayField") // Returning unmod
 		public List<String> getTopLevelDomains() {
 			return topLevelDomains;
 		}
@@ -357,6 +360,7 @@ public class TopLevelDomain {
 		/**
 		 * @see  TopLevelDomain#getComments()
 		 */
+		@SuppressWarnings("ReturnOfCollectionOrArrayField") // Returning unmod
 		public List<String> getComments() {
 			return comments;
 		}
