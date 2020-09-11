@@ -248,6 +248,7 @@ public class TopLevelDomain {
 		 *
 		 * @return  the last stored snapshot (even if stored by a different process) or {@code null} if none available.
 		 */
+		@SuppressWarnings({"UseSpecificCatch", "TooBroadCatch"})
 		private static Snapshot loadFromPreferences() {
 			logger.fine("Loading from preferences");
 			String source;
@@ -293,8 +294,10 @@ public class TopLevelDomain {
 					}
 					logger.fine("Successful load from preferences");
 					return newSnapshot;
-				} catch(RuntimeException | IOException e) {
-					logger.log(Level.SEVERE, "Unable to load top level domains from preferences", e);
+				} catch(ThreadDeath td) {
+					throw td;
+				} catch(Throwable t) {
+					logger.log(Level.SEVERE, "Unable to load top level domains from preferences", t);
 					return null;
 				}
 			} else {
@@ -416,6 +419,7 @@ public class TopLevelDomain {
 	 * Will trigger asynchronous background update if it is time to to so, but will use the currently
 	 * available data and not wait for the update to complete.
 	 */
+	@SuppressWarnings({"UseSpecificCatch", "TooBroadCatch"})
 	public static Snapshot getSnapshot() {
 		synchronized(lock) {
 			if(snapshot == null) {
@@ -512,8 +516,10 @@ public class TopLevelDomain {
 										logger.fine("Closing input");
 										in.close();
 									}
-								} catch(RuntimeException | IOException e) {
-									logger.log(Level.SEVERE, "Unable to load new snapshot", e);
+								} catch(ThreadDeath td) {
+									throw td;
+								} catch(Throwable t) {
+									logger.log(Level.SEVERE, "Unable to load new snapshot", t);
 									try {
 										synchronized(lock) {
 											logger.fine("Saving failed update of top level domains to preferences");
