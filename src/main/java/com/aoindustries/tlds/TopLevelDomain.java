@@ -22,6 +22,7 @@
  */
 package com.aoindustries.tlds;
 
+import com.aoindustries.collections.AoCollections;
 import java.io.BufferedReader;
 import java.io.ByteArrayOutputStream;
 import java.io.DataOutputStream;
@@ -41,7 +42,6 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -238,7 +238,7 @@ public class TopLevelDomain {
 			}
 			// Compute lowerTldMap
 			{
-				lowerTldMap = new HashMap<>(topLevelDomains.size()*4/3+1);
+				lowerTldMap = AoCollections.newHashMap(topLevelDomains.size());
 				for(String tld : topLevelDomains) {
 					lowerTldMap.put(tld.toLowerCase(Locale.ROOT).intern(), tld);
 				}
