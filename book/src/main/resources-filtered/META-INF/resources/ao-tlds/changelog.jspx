@@ -37,7 +37,7 @@ along with ao-tlds.  If not, see <http://www.gnu.org/licenses />.
 		shortTitle="Changelog"
 		tocLevels="1"
 		datePublished="2016-12-12T14:20:29-0600"
-		dateModified="2020-11-17T22:41:04-06:00"
+		dateModified="2020-11-17T22:48:10-06:00"
 	>
 		<!-- The current snapshot, unreleased version -->
 		<c:set var="version" value="@{com.aoindustries:ao-tlds:pom.version}" />
@@ -52,13 +52,22 @@ along with ao-tlds.  If not, see <http://www.gnu.org/licenses />.
 				groupId="@{project.groupId}"
 				artifactId="@{documented.artifactId}"
 				scmUrl="@{project.scm.url}"
-			>
-				<ul>
-					<li>Now depends on <core:link book="/ao-collections" page="/index.jspx" />.</li>
-					<li>Updated bundled <code>tlds-alpha-by-domain.txt</code> to version <code>2020111700</code>.</li>
-				</ul>
-			</changelog:release>
+			/>
 		</c:if>
+
+		<changelog:release
+			projectName="@{documented.name}"
+			version="1.2.0"
+			datePublished="2020-11-17T22:48:10-06:00"
+			groupId="@{project.groupId}"
+			artifactId="@{documented.artifactId}"
+			scmUrl="@{project.scm.url}"
+		>
+			<ul>
+				<li>Now depends on <core:link book="/ao-collections" page="/index.jspx" />.</li>
+				<li>Updated bundled <code>tlds-alpha-by-domain.txt</code> to version <code>2020111700</code>.</li>
+			</ul>
+		</changelog:release>
 
 		<changelog:release
 			projectName="@{documented.name}"
