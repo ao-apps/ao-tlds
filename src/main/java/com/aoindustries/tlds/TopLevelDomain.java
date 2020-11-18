@@ -30,6 +30,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.Reader;
 import java.io.StringReader;
+import java.io.UncheckedIOException;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLConnection;
@@ -456,7 +457,7 @@ public class TopLevelDomain {
 							snapshot = Snapshot.loadFromReader(in, LAST_UPDATED, true);
 						}
 					} catch(IOException e) {
-						throw new RuntimeException("Unable to load bootstrap top level domains", e);
+						throw new UncheckedIOException("Unable to load bootstrap top level domains", e);
 					}
 				} else {
 					logger.fine("Successfully loaded from preferences");
