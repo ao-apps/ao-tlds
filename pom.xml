@@ -25,7 +25,7 @@ along with ao-tlds.  If not, see <http://www.gnu.org/licenses />.
 	<modelVersion>4.0.0</modelVersion>
 
 	<parent>
-		<groupId>com.aoindustries</groupId><artifactId>ao-oss-parent</artifactId><version>1.12.0<!-- -POST-SNAPSHOT --></version>
+		<groupId>com.aoindustries</groupId><artifactId>ao-oss-parent</artifactId><version>1.12.0-POST-SNAPSHOT</version>
 		<relativePath>../ao-oss-parent/pom.xml</relativePath>
 	</parent>
 
@@ -162,11 +162,11 @@ along with ao-tlds.  If not, see <http://www.gnu.org/licenses />.
 		<dependencies>
 			<!-- Direct -->
 			<dependency>
-				<groupId>com.aoindustries</groupId><artifactId>ao-collections</artifactId><version>1.2.0<!-- ${POST-SNAPSHOT} --></version>
+				<groupId>com.aoindustries</groupId><artifactId>ao-collections</artifactId><version>1.2.0${POST-SNAPSHOT}</version>
 			</dependency>
 			<!-- Transitive -->
 			<dependency>
-				<groupId>com.aoindustries</groupId><artifactId>ao-lang</artifactId><version>4.6.1<!-- ${POST-SNAPSHOT} --></version>
+				<groupId>com.aoindustries</groupId><artifactId>ao-lang</artifactId><version>4.6.1${POST-SNAPSHOT}</version>
 			</dependency>
 			<!-- Test Direct -->
 			<dependency>
