@@ -35,7 +35,7 @@ along with ao-tlds.  If not, see <http://www.gnu.org/licenses />.
 		<ao:forward page="index.html" />
 	</c:if>
 	<core:page
-		title="@{documented.name} @{com.aoindustries:ao-tlds:pom.version} API Docs"
+		title="@{documented.name} ${ao:getProjectVersion('./', 'com.aoindustries', 'ao-tlds', '¿@{project.version}?')} API Docs"
 		shortTitle="API Docs"
 		datePublished="2016-12-05T18:27:49-0600"
 		dateModified="${ao:getLastModified('index.html')}"
