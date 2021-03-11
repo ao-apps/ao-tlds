@@ -1,6 +1,6 @@
 /*
  * ao-tlds - Self-updating Java API to get top-level domains.
- * Copyright (C) 2016, 2017, 2018, 2019, 2020  AO Industries, Inc.
+ * Copyright (C) 2016, 2017, 2018, 2019, 2020, 2021  AO Industries, Inc.
  *     support@aoindustries.com
  *     7262 Bull Pen Cir
  *     Mobile, AL 36695
@@ -168,7 +168,7 @@ public class TopLevelDomain {
 		 */
 		private final long nextUpdateBefore;
 
-		private final Map<String,String> lowerTldMap;
+		private final Map<String, String> lowerTldMap;
 
 		private Snapshot(
 			String source,
