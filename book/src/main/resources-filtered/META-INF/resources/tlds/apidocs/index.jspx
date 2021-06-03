@@ -22,7 +22,7 @@ You should have received a copy of the GNU Lesser General Public License
 along with ao-tlds.  If not, see <http://www.gnu.org/licenses />.
 -->
 <jsp:root
-	xmlns:ao="https://aoindustries.com/ao-taglib/"
+	xmlns:ao="https://oss.aoapps.com/taglib/"
 	xmlns:c="http://java.sun.com/jsp/jstl/core"
 	xmlns:core="https://semanticcms.com/core/taglib/"
 	xmlns:jsp="http://java.sun.com/JSP/Page"
@@ -35,7 +35,7 @@ along with ao-tlds.  If not, see <http://www.gnu.org/licenses />.
 		<ao:forward page="index.html" />
 	</c:if>
 	<core:page
-		title="@{documented.name} ${ao:getProjectVersion('./', 'com.aoindustries', 'ao-tlds', '¿@{project.version}?')} API Docs"
+		title="@{documented.name} ${ao:getProjectVersion('./', 'com.aoapps', 'ao-tlds', '¿@{project.version}?')} API Docs"
 		shortTitle="API Docs"
 		datePublished="2016-12-05T18:27:49-06:00"
 		dateModified="${ao:getLastModified('index.html')}"

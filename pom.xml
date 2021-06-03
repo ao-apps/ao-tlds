@@ -25,11 +25,11 @@ along with ao-tlds.  If not, see <http://www.gnu.org/licenses />.
 	<modelVersion>4.0.0</modelVersion>
 
 	<parent>
-		<groupId>com.aoindustries</groupId><artifactId>ao-oss-parent</artifactId><version>1.16.0-SNAPSHOT</version>
-		<relativePath>../ao-oss-parent/pom.xml</relativePath>
+		<groupId>com.aoapps</groupId><artifactId>ao-oss-parent</artifactId><version>1.16.0-SNAPSHOT</version>
+		<relativePath>../parent/pom.xml</relativePath>
 	</parent>
 
-	<groupId>com.aoindustries</groupId><artifactId>ao-tlds</artifactId><version>1.2.1-SNAPSHOT</version>
+	<groupId>com.aoapps</groupId><artifactId>ao-tlds</artifactId><version>1.2.1-SNAPSHOT</version>
 	<packaging>bundle</packaging>
 
 	<properties>
@@ -39,10 +39,13 @@ along with ao-tlds.  If not, see <http://www.gnu.org/licenses />.
 		<javadoc.link.javase>${javadoc.link.javase.8}</javadoc.link.javase>
 		<!-- This must be set in your ~/.m2/settings.xml when building with JDK < 9 -->
 		<javase.bootclasspath>${javase.bootclasspath.8}</javase.bootclasspath>
+
+		<javadoc.breadcrumbs><![CDATA[<a target="${javadoc.target}" href="https://oss.aoapps.com/">AO OSS</a>
+/ <a target="${javadoc.target}" href="${project.url}">TLDs</a>]]></javadoc.breadcrumbs>
 	</properties>
 
 	<name>AO TLDs</name>
-	<url>https://aoindustries.com/ao-tlds/</url>
+	<url>https://oss.aoapps.com/tlds/</url>
 	<description>Self-updating Java API to get top-level domains.</description>
 	<inceptionYear>2016</inceptionYear>
 
@@ -148,9 +151,9 @@ along with ao-tlds.  If not, see <http://www.gnu.org/licenses />.
 									<artifactItems>
 										<!-- Direct -->
 										<artifactItem>
-											<groupId>com.aoindustries</groupId><artifactId>ao-collections</artifactId><classifier>javadoc</classifier>
+											<groupId>com.aoapps</groupId><artifactId>ao-collections</artifactId><classifier>javadoc</classifier>
 											<includes>element-list, package-list</includes>
-											<outputDirectory>${project.build.directory}/offlineLinks/com.aoindustries/ao-collections</outputDirectory>
+											<outputDirectory>${project.build.directory}/offlineLinks/com.aoapps/ao-collections</outputDirectory>
 										</artifactItem>
 										<!-- Test Direct -->
 										<artifactItem>
@@ -169,8 +172,8 @@ along with ao-tlds.  If not, see <http://www.gnu.org/licenses />.
 							<offlineLinks>
 								<!-- Direct -->
 								<offlineLink>
-									<url>https://aoindustries.com/ao-collections/apidocs/</url>
-									<location>${project.build.directory}/offlineLinks/com.aoindustries/ao-collections</location>
+									<url>https://oss.aoapps.com/collections/apidocs/</url>
+									<location>${project.build.directory}/offlineLinks/com.aoapps/ao-collections</location>
 								</offlineLink>
 								<!-- Test Direct -->
 								<offlineLink>
@@ -180,7 +183,7 @@ along with ao-tlds.  If not, see <http://www.gnu.org/licenses />.
 								<!-- Java SE -->
 								<offlineLink>
 									<url>${javadoc.link.javase}</url>
-									<location>${project.build.directory}/offlineLinks/com/aoindustries/javadoc/offline/javase/${javase.release}</location>
+									<location>${project.build.directory}/offlineLinks/com/aoapps/javadoc/offline/javase/${javase.release}</location>
 								</offlineLink>
 							</offlineLinks>
 						</configuration>
@@ -194,11 +197,11 @@ along with ao-tlds.  If not, see <http://www.gnu.org/licenses />.
 		<dependencies>
 			<!-- Direct -->
 			<dependency>
-				<groupId>com.aoindustries</groupId><artifactId>ao-collections</artifactId><version>1.2.1-SNAPSHOT<!-- ${POST-SNAPSHOT} --></version>
+				<groupId>com.aoapps</groupId><artifactId>ao-collections</artifactId><version>1.2.1-SNAPSHOT<!-- ${POST-SNAPSHOT} --></version>
 			</dependency>
 			<!-- Transitive -->
 			<dependency>
-				<groupId>com.aoindustries</groupId><artifactId>ao-lang</artifactId><version>4.17.1-SNAPSHOT<!-- ${POST-SNAPSHOT} --></version>
+				<groupId>com.aoapps</groupId><artifactId>ao-lang</artifactId><version>4.17.1-SNAPSHOT<!-- ${POST-SNAPSHOT} --></version>
 			</dependency>
 			<!-- Test Direct -->
 			<dependency>
@@ -218,7 +221,7 @@ along with ao-tlds.  If not, see <http://www.gnu.org/licenses />.
 	<dependencies>
 		<!-- Direct -->
 		<dependency>
-			<groupId>com.aoindustries</groupId><artifactId>ao-collections</artifactId>
+			<groupId>com.aoapps</groupId><artifactId>ao-collections</artifactId>
 		</dependency>
 		<!-- Test Direct -->
 		<dependency>
