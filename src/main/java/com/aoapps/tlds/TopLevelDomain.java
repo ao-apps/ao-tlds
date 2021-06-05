@@ -20,9 +20,9 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with ao-tlds.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.aoindustries.tlds;
+package com.aoapps.tlds;
 
-import com.aoindustries.collections.AoCollections;
+import com.aoapps.collections.AoCollections;
 import java.io.BufferedReader;
 import java.io.ByteArrayOutputStream;
 import java.io.DataOutputStream;

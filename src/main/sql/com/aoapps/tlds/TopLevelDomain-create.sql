@@ -23,10 +23,10 @@
 -- Must be done as "postgres" user in PostgreSQL < 13:
 CREATE EXTENSION IF NOT EXISTS citext;
 
-CREATE TABLE "com.aoindustries.tlds"."TopLevelDomain" (
+CREATE TABLE "com.aoapps.tlds"."TopLevelDomain" (
   label citext PRIMARY KEY
 );
 
-COMMENT ON COLUMN "com.aoindustries.tlds"."TopLevelDomain".label IS
+COMMENT ON COLUMN "com.aoapps.tlds"."TopLevelDomain".label IS
 'The case-insensitive, unique top-level domain label, in the
 case obtained tlds-alpha-by-domain.txt (uppercase currently)';

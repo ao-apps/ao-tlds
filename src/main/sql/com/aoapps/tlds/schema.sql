@@ -1,6 +1,6 @@
 /*
  * ao-tlds - Self-updating Java API to get top-level domains.
- * Copyright (C) 2018  AO Industries, Inc.
+ * Copyright (C) 2018, 2021  AO Industries, Inc.
  *     support@aoindustries.com
  *     7262 Bull Pen Cir
  *     Mobile, AL 36695
@@ -20,7 +20,7 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with ao-tlds.  If not, see <http://www.gnu.org/licenses/>.
  */
-CREATE SCHEMA IF NOT EXISTS "com.aoindustries.tlds";
+CREATE SCHEMA IF NOT EXISTS "com.aoapps.tlds";
 
-COMMENT ON SCHEMA "com.aoindustries.tlds" IS
+COMMENT ON SCHEMA "com.aoapps.tlds" IS
 'Self-updating Java API to get top-level domains.';

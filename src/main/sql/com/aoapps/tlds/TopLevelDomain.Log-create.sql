@@ -1,6 +1,6 @@
 /*
  * ao-tlds - Self-updating Java API to get top-level domains.
- * Copyright (C) 2018  AO Industries, Inc.
+ * Copyright (C) 2018, 2021  AO Industries, Inc.
  *     support@aoindustries.com
  *     7262 Bull Pen Cir
  *     Mobile, AL 36695
@@ -21,7 +21,7 @@
  * along with ao-tlds.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-CREATE TABLE "com.aoindustries.tlds"."TopLevelDomain.Log" (
+CREATE TABLE "com.aoapps.tlds"."TopLevelDomain.Log" (
   "lastUpdatedTime" timestamp with time zone
     PRIMARY KEY,
   "isBootstrap" boolean
@@ -44,30 +44,30 @@ CREATE TABLE "com.aoindustries.tlds"."TopLevelDomain.Log" (
     NOT NULL
 );
 
-COMMENT ON TABLE "com.aoindustries.tlds"."TopLevelDomain.Log" IS
+COMMENT ON TABLE "com.aoapps.tlds"."TopLevelDomain.Log" IS
 'The auto-update history of the TopLevelDomain table';
 
-COMMENT ON COLUMN "com.aoindustries.tlds"."TopLevelDomain.Log"."lastUpdatedTime" IS
+COMMENT ON COLUMN "com.aoapps.tlds"."TopLevelDomain.Log"."lastUpdatedTime" IS
 'The last time the list was updated, whether successful or not';
 
-COMMENT ON COLUMN "com.aoindustries.tlds"."TopLevelDomain.Log"."isBootstrap" IS
+COMMENT ON COLUMN "com.aoapps.tlds"."TopLevelDomain.Log"."isBootstrap" IS
 'Whether or not this is the bundled bootstrap data';
 
-COMMENT ON COLUMN "com.aoindustries.tlds"."TopLevelDomain.Log"."lastUpdatedSuccessful" IS
+COMMENT ON COLUMN "com.aoapps.tlds"."TopLevelDomain.Log"."lastUpdatedSuccessful" IS
 'Whether the last update was successful';
 
-COMMENT ON COLUMN "com.aoindustries.tlds"."TopLevelDomain.Log"."lastSuccessfulUpdateTime" IS
+COMMENT ON COLUMN "com.aoapps.tlds"."TopLevelDomain.Log"."lastSuccessfulUpdateTime" IS
 'The last time the list was successfully updated';
 
-COMMENT ON COLUMN "com.aoindustries.tlds"."TopLevelDomain.Log".comments IS
+COMMENT ON COLUMN "com.aoapps.tlds"."TopLevelDomain.Log".comments IS
 'The comments, joined by newlines when there is more than one comment';
 
-COMMENT ON COLUMN "com.aoindustries.tlds"."TopLevelDomain.Log".inserted IS
+COMMENT ON COLUMN "com.aoapps.tlds"."TopLevelDomain.Log".inserted IS
 'The number of new top-level domains added';
 
-COMMENT ON COLUMN "com.aoindustries.tlds"."TopLevelDomain.Log".updated IS
+COMMENT ON COLUMN "com.aoapps.tlds"."TopLevelDomain.Log".updated IS
 'The number of top-level domains updated, which will only occur when
 the case is changed';
 
-COMMENT ON COLUMN "com.aoindustries.tlds"."TopLevelDomain.Log".deleted IS
+COMMENT ON COLUMN "com.aoapps.tlds"."TopLevelDomain.Log".deleted IS
 'The number of old top-level domains removed';

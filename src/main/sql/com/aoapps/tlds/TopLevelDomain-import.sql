@@ -1,6 +1,6 @@
 /*
  * ao-tlds - Self-updating Java API to get top-level domains.
- * Copyright (C) 2018  AO Industries, Inc.
+ * Copyright (C) 2018, 2021  AO Industries, Inc.
  *     support@aoindustries.com
  *     7262 Bull Pen Cir
  *     Mobile, AL 36695
@@ -40,7 +40,7 @@ CREATE TEMPORARY TABLE "TopLevelDomain_import" (
 
 -- Delete old entries
 WITH deleted AS (
-  DELETE FROM "com.aoindustries.tlds"."TopLevelDomain" WHERE label NOT IN (
+  DELETE FROM "com.aoapps.tlds"."TopLevelDomain" WHERE label NOT IN (
     SELECT label FROM "TopLevelDomain_import"
   ) RETURNING label
 )
@@ -48,7 +48,7 @@ SELECT COUNT(*) AS deleted FROM deleted \gset
 
 -- Delete old entries where case changed
 WITH delete_for_update AS (
-  DELETE FROM "com.aoindustries.tlds"."TopLevelDomain" WHERE label::text NOT IN (
+  DELETE FROM "com.aoapps.tlds"."TopLevelDomain" WHERE label::text NOT IN (
     SELECT label::text FROM "TopLevelDomain_import"
   ) RETURNING label
 )
@@ -56,9 +56,9 @@ SELECT COUNT(*) AS delete_for_update FROM delete_for_update \gset
 
 -- Add new entries
 WITH inserted AS (
-  INSERT INTO "com.aoindustries.tlds"."TopLevelDomain"
+  INSERT INTO "com.aoapps.tlds"."TopLevelDomain"
   SELECT * FROM "TopLevelDomain_import" WHERE label NOT IN (
-    SELECT label FROM "com.aoindustries.tlds"."TopLevelDomain"
+    SELECT label FROM "com.aoapps.tlds"."TopLevelDomain"
   ) RETURNING label
 )
 SELECT COUNT(*) AS inserted FROM inserted \gset
@@ -69,7 +69,7 @@ DROP TABLE "TopLevelDomain_import";
 \set comments `grep '^#' tlds-alpha-by-domain.txt`
 
 -- Add Log entry
-INSERT INTO "com.aoindustries.tlds"."TopLevelDomain.Log" VALUES (
+INSERT INTO "com.aoapps.tlds"."TopLevelDomain.Log" VALUES (
   now(),
   TRUE,
   TRUE,
@@ -82,4 +82,4 @@ INSERT INTO "com.aoindustries.tlds"."TopLevelDomain.Log" VALUES (
 
 COMMIT;
 
-VACUUM FULL ANALYZE "com.aoindustries.tlds"."TopLevelDomain";
+VACUUM FULL ANALYZE "com.aoapps.tlds"."TopLevelDomain";
