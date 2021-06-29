@@ -33,6 +33,7 @@ along with ao-tlds.  If not, see <http://www.gnu.org/licenses />.
 	<packaging>bundle</packaging>
 
 	<properties>
+		<module.name>com.aoapps.tlds.book</module.name>
 		<!-- These values are copied from the project being documented -->
 		<documented.artifactId>ao-tlds</documented.artifactId>
 		<documented.name>AO TLDs</documented.name>
@@ -91,7 +92,6 @@ along with ao-tlds.  If not, see <http://www.gnu.org/licenses />.
 				<configuration>
 					<usedDependencies>
 						<!-- JSP Only -->
-						<dependency>com.aoapps:ao-badges</dependency>
 						<dependency>com.aoapps:ao-taglib</dependency>
 						<dependency>com.semanticcms:semanticcms-changelog-taglib</dependency>
 						<dependency>com.semanticcms:semanticcms-core-taglib</dependency>
@@ -100,10 +100,38 @@ along with ao-tlds.  If not, see <http://www.gnu.org/licenses />.
 						<!-- Runtime Direct -->
 						<dependency>org.apache.taglibs:taglibs-standard-impl</dependency>
 					</usedDependencies>
+					<ignoredDependencies>
+						<!-- No "module-info.java" in some release builds -->
+						<dependency>com.aoapps:ao-badges</dependency>
+						<dependency>com.aoapps:ao-web-resources-registry</dependency>
+					</ignoredDependencies>
 				</configuration>
 			</plugin>
 		</plugins>
 	</build>
+
+	<profiles>
+		<profile>
+			<id>release</id>
+			<build>
+				<plugins>
+					<plugin>
+						<groupId>org.apache.felix</groupId><artifactId>maven-bundle-plugin</artifactId>
+						<configuration>
+							<instructions>
+								<!--
+									Releases use "Automatic-Module-Name" instead of "module-info.java"
+									since has direct dependencies that are not yet modularized.
+								-->
+								<Automatic-Module-Name>${module.name}</Automatic-Module-Name>
+								<Private-Package>!.</Private-Package>
+							</instructions>
+						</configuration>
+					</plugin>
+				</plugins>
+			</build>
+		</profile>
+	</profiles>
 
 	<dependencyManagement>
 		<dependencies>
