@@ -232,7 +232,7 @@ along with ao-tlds.  If not, see <http://www.gnu.org/licenses />.
 			</dependency>
 			<!-- Transitive -->
 			<dependency>
-				<groupId>com.aoapps</groupId><artifactId>ao-lang</artifactId><version>5.0.0-SNAPSHOT<!-- ${POST-SNAPSHOT} --></version>
+				<groupId>com.aoapps</groupId><artifactId>ao-lang</artifactId><version>5.0.0${POST-SNAPSHOT}</version>
 			</dependency>
 			<!-- Test Direct -->
 			<dependency>
