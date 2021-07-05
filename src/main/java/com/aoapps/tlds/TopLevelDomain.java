@@ -67,9 +67,9 @@ public class TopLevelDomain {
 	/**
 	 * Hard-coded bootstrap data.  This is used when no download completed or possible.
 	 * This matches the bundled copy of tlds-alpha-by-domain.txt
-	 * <pre>date +%s000L -d "Tue Nov 17 07:07:01 2020 UTC"</pre>
+	 * <pre>date +%s000L -d "Sun Jul  4 07:07:01 2021 UTC"</pre>
 	 */
-	private static final long LAST_UPDATED = 1605596821000L;
+	private static final long LAST_UPDATED = 1625382421000L;
 
 	/**
 	 * In DEBUG mode, times are greatly shortened for testing.

@@ -37,7 +37,7 @@ along with ao-tlds.  If not, see <http://www.gnu.org/licenses />.
 		shortTitle="Changelog"
 		tocLevels="1"
 		datePublished="2016-12-12T14:20:29-06:00"
-		dateModified="2021-06-27T16:13:41-05:00"
+		dateModified="2021-07-04T21:56:59-05:00"
 	>
 		<c:if test="${fn:endsWith('@{project.version}', '-SNAPSHOT') and !fn:endsWith('@{project.version}', '-POST-SNAPSHOT')}">
 			<changelog:release
@@ -53,6 +53,7 @@ along with ao-tlds.  If not, see <http://www.gnu.org/licenses />.
 					<li>Maven artifact relocated from <code>com.aoindustries:ao-tlds</code> to <code>com.aoapps:ao-tlds</code>.</li>
 					<li>Package renamed from <code>com.aoindustries.tlds</code> to <code>com.aoapps.tlds</code>.</li>
 					<li>SQL schema renamed from <code>com.aoindustries.tlds</code> to <code>com.aoapps.tlds</code>.</li>
+					<li>Updated bundled <code>tlds-alpha-by-domain.txt</code> to version <code>2021070400</code>.</li>
 				</ul>
 			</changelog:release>
 		</c:if>
