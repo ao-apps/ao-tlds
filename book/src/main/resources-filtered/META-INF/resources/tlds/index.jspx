@@ -34,7 +34,7 @@ along with ao-tlds.  If not, see <http://www.gnu.org/licenses />.
 		title="@{documented.name}"
 		description="@{documented.description}"
 		datePublished="2016-12-05T18:27:49-06:00"
-		dateModified="2020-09-18T21:05:09-05:00"
+		dateModified="2021-07-12T13:25:42-05:00"
 	>
 		<core:child page="changelog.jspx" />
 		<core:child page="apidocs/index.jspx" />
@@ -47,6 +47,8 @@ along with ao-tlds.  If not, see <http://www.gnu.org/licenses />.
 				arg.javaseVersion="@{documented.javase.version}"
 				arg.semanticVersioning="2.0.0"
 				arg.license="lgpl-3.0"
+				arg.scmUrl="@{project.scm.url}"
+				arg.githubBuildWorkflow="Build"
 			/>
 		</header>
 		<p>
