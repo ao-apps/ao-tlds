@@ -34,7 +34,7 @@ along with ao-tlds.  If not, see <http://www.gnu.org/licenses />.
 		title="@{documented.name}"
 		description="@{documented.description}"
 		datePublished="2016-12-05T18:27:49-06:00"
-		dateModified="2021-07-15T17:33:32-05:00"
+		dateModified="2021-07-16T03:48:08-05:00"
 	>
 		<core:child page="changelog.jspx" />
 		<core:child page="apidocs/index.jspx" />
@@ -52,6 +52,12 @@ along with ao-tlds.  If not, see <http://www.gnu.org/licenses />.
 				arg.mavenBadge="maven-central"
 				arg.groupId="@{project.groupId}"
 				arg.artifactId="@{documented.artifactId}"
+				arg.sonarQualityGate="true"
+				arg.sonarLinesOfCode="true"
+				arg.sonarReliability="true"
+				arg.sonarSecurity="true"
+				arg.sonarMaintainability="true"
+				arg.sonarCoverage="true"
 			/>
 		</header>
 		<p>
