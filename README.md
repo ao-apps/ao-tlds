@@ -1,4 +1,4 @@
-# [<img src="ao-logo.png" alt="AO Logo" width="35" height="40">](https://github.com/aoindustries) [AO OSS](https://github.com/aoindustries/ao-oss) / [TLDs](https://github.com/aoindustries/ao-tlds)
+# [<img src="ao-logo.png" alt="AO Logo" width="35" height="40">](https://github.com/ao-apps) [AO OSS](https://github.com/ao-apps/ao-oss) / [TLDs](https://github.com/ao-apps/ao-tlds)
 
 [![project: current stable](https://oss.aoapps.com/ao-badges/project-current-stable.svg)](https://aoindustries.com/life-cycle#project-current-stable)
 [![management: production](https://oss.aoapps.com/ao-badges/management-production.svg)](https://aoindustries.com/life-cycle#management-production)
@@ -7,7 +7,7 @@
 [![semantic versioning: 2.0.0](https://oss.aoapps.com/ao-badges/semver-2.0.0.svg)](http://semver.org/spec/v2.0.0.html)
 [![license: LGPL v3](https://oss.aoapps.com/ao-badges/license-lgpl-3.0.svg)](https://www.gnu.org/licenses/lgpl-3.0)
 
-[![Build](https://github.com/aoindustries/ao-tlds/workflows/Build/badge.svg?branch=master)](https://github.com/aoindustries/ao-tlds/actions?query=workflow%3ABuild)
+[![Build](https://github.com/ao-apps/ao-tlds/workflows/Build/badge.svg?branch=master)](https://github.com/ao-apps/ao-tlds/actions?query=workflow%3ABuild)
 [![Maven Central](https://maven-badges.herokuapp.com/maven-central/com.aoapps/ao-tlds/badge.svg)](https://maven-badges.herokuapp.com/maven-central/com.aoapps/ao-tlds)
 [![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?branch=master&project=com.aoapps%3Aao-tlds&metric=alert_status)](https://sonarcloud.io/dashboard?branch=master&id=com.aoapps%3Aao-tlds)
 [![Lines of Code](https://sonarcloud.io/api/project_badges/measure?branch=master&project=com.aoapps%3Aao-tlds&metric=ncloc)](https://sonarcloud.io/component_measures?branch=master&id=com.aoapps%3Aao-tlds&metric=ncloc)  
@@ -23,7 +23,7 @@ Self-updating Java API to get top-level domains.
 * [Changelog](https://oss.aoapps.com/tlds/changelog)
 * [API Docs](https://oss.aoapps.com/tlds/apidocs/)
 * [Maven Central Repository](https://search.maven.org/artifact/com.aoapps/ao-tlds)
-* [GitHub](https://github.com/aoindustries/ao-tlds)
+* [GitHub](https://github.com/ao-apps/ao-tlds)
 
 ## Features
 * Background self-updating from [official iana.org source](https://data.iana.org/TLD/tlds-alpha-by-domain.txt).
