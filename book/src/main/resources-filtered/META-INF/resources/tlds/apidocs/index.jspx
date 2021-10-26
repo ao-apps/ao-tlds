@@ -32,6 +32,7 @@ along with ao-tlds.  If not, see <http://www.gnu.org/licenses />.
 	<jsp:directive.page session="false" />
 	<jsp:output omit-xml-declaration="true" />
 	<c:if test="${core:getCaptureLevel()==null and empty param.view}">
+		<jsp:directive.page contentType="text/html" />
 		<ao:forward page="index.html" />
 	</c:if>
 	<core:page
