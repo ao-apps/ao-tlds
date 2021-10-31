@@ -103,8 +103,8 @@ public class TopLevelDomain {
 		 */
 		private static final long UPDATE_INTERVAL_SUCCESS_MIN =
 			DEBUG
-			? 60L * 60 * 1000 // 1 hour
-			: 7L * 24 * 60 * 60 * 1000 // 7 days
+			? (         60L * 60 * 1000) // 1 hour
+			: (7L * 24 * 60 * 60 * 1000) // 7 days
 		;
 
 		/**
@@ -112,8 +112,8 @@ public class TopLevelDomain {
 		 */
 		private static final int UPDATE_INTERVAL_SUCCESS_DEVIATION =
 			DEBUG
-			? 5 * 60 * 1000 // 5 minutes
-			: 24 * 60 * 60 * 1000 // 1 day
+			? (      5 * 60 * 1000) // 5 minutes
+			: (24 * 60 * 60 * 1000) // 1 day
 		;
 
 		/**
@@ -121,8 +121,8 @@ public class TopLevelDomain {
 		 */
 		private static final long UPDATE_INTERVAL_FAILURE_MIN =
 			DEBUG
-			? 10L * 60 * 1000 // 10 minutes
-			: 24L * 60 * 60 * 1000 // 1 day
+			? (     10L * 60 * 1000) // 10 minutes
+			: (24L * 60 * 60 * 1000) // 1 day
 		;
 
 		/**
@@ -130,8 +130,8 @@ public class TopLevelDomain {
 		 */
 		private static final int UPDATE_INTERVAL_FAILURE_DEVIATION =
 			DEBUG
-			? 60 * 1000 // 1 minute
-			: 4 * 60 * 60 * 1000 // 4 hours
+			? (         60 * 1000) // 1 minute
+			: (4 * 60 * 60 * 1000) // 4 hours
 		;
 
 		private static final Preferences prefs = Preferences.userNodeForPackage(Snapshot.class); // systemNodeForPackage not available as regular user in Linux
