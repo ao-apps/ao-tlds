@@ -210,6 +210,11 @@ along with ao-tlds.  If not, see <https://www.gnu.org/licenses/>.
 											<includes>element-list, package-list</includes>
 											<outputDirectory>${project.build.directory}/offlineLinks/com.aoapps/ao-collections</outputDirectory>
 										</artifactItem>
+										<artifactItem>
+											<groupId>com.aoapps</groupId><artifactId>ao-lang</artifactId><classifier>javadoc</classifier>
+											<includes>element-list, package-list</includes>
+											<outputDirectory>${project.build.directory}/offlineLinks/com.aoapps/ao-lang</outputDirectory>
+										</artifactItem>
 										<!-- Test Direct -->
 										<artifactItem>
 											<groupId>junit</groupId><artifactId>junit</artifactId><classifier>javadoc</classifier>
@@ -230,6 +235,10 @@ along with ao-tlds.  If not, see <https://www.gnu.org/licenses/>.
 									<url>https://oss.aoapps.com/collections/apidocs/</url>
 									<location>${project.build.directory}/offlineLinks/com.aoapps/ao-collections</location>
 								</offlineLink>
+								<offlineLink>
+									<url>https://oss.aoapps.com/lang/apidocs/</url>
+									<location>${project.build.directory}/offlineLinks/com.aoapps/ao-lang</location>
+								</offlineLink>
 								<!-- Test Direct -->
 								<offlineLink>
 									<url>https://junit.org/junit4/javadoc/latest/</url>
@@ -249,7 +258,6 @@ along with ao-tlds.  If not, see <https://www.gnu.org/licenses/>.
 			<dependency>
 				<groupId>com.aoapps</groupId><artifactId>ao-collections</artifactId><version>3.0.0${POST-SNAPSHOT}</version>
 			</dependency>
-			<!-- Transitive -->
 			<dependency>
 				<groupId>com.aoapps</groupId><artifactId>ao-lang</artifactId><version>5.1.3-SNAPSHOT<!-- ${POST-SNAPSHOT} --></version>
 			</dependency>
@@ -272,6 +280,9 @@ along with ao-tlds.  If not, see <https://www.gnu.org/licenses/>.
 		<!-- Direct -->
 		<dependency>
 			<groupId>com.aoapps</groupId><artifactId>ao-collections</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>com.aoapps</groupId><artifactId>ao-lang</artifactId>
 		</dependency>
 		<!-- Test Direct -->
 		<dependency>

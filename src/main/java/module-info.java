@@ -24,6 +24,7 @@ module com.aoapps.tlds {
 	exports com.aoapps.tlds;
 	// Direct
 	requires com.aoapps.collections; // <groupId>com.aoapps</groupId><artifactId>ao-collections</artifactId>
+	requires com.aoapps.lang; // <groupId>com.aoapps</groupId><artifactId>ao-lang</artifactId>
 	// Java SE
 	requires java.logging;
 	requires java.prefs;

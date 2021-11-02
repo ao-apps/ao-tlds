@@ -23,6 +23,7 @@
 package com.aoapps.tlds;
 
 import com.aoapps.collections.AoCollections;
+import com.aoapps.lang.io.IoUtils;
 import java.io.BufferedReader;
 import java.io.ByteArrayOutputStream;
 import java.io.DataOutputStream;
@@ -38,6 +39,7 @@ import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.security.SecureRandom;
 import java.text.DateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -136,7 +138,10 @@ public class TopLevelDomain {
 
 		private static final Preferences prefs = Preferences.userNodeForPackage(Snapshot.class); // systemNodeForPackage not available as regular user in Linux
 
-		private static final Random random = new Random();
+		/**
+		 * A fast pseudo-random number generator for non-cryptographic purposes.
+		 */
+		private static final Random fastRandom = new Random(IoUtils.bufferToLong(new SecureRandom().generateSeed(Long.BYTES)));
 
 		private final String source;
 
@@ -226,7 +231,7 @@ public class TopLevelDomain {
 					updateMin = UPDATE_INTERVAL_FAILURE_MIN;
 					updateDeviation = UPDATE_INTERVAL_FAILURE_DEVIATION;
 				}
-				int randomDeviation = random.nextInt(updateDeviation);
+				int randomDeviation = fastRandom.nextInt(updateDeviation);
 				this.nextUpdateAfter = lastUpdatedTime + updateMin + randomDeviation;
 				this.nextUpdateBefore = lastUpdatedTime - updateMin - randomDeviation;
 				if(logger.isLoggable(Level.FINE)) {
