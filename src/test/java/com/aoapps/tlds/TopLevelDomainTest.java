@@ -28,9 +28,6 @@ import static org.junit.Assert.assertTrue;
 
 @SuppressWarnings("UseOfSystemOutOrSystemErr")
 public class TopLevelDomainTest {
-	
-	public TopLevelDomainTest() {
-	}
 
 	/**
 	 * Test of getTopLevelDomains method, of class TopLevelDomain.

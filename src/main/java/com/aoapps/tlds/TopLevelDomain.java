@@ -62,7 +62,10 @@ import java.util.prefs.Preferences;
  *
  * @author  AO Industries, Inc.
  */
-public class TopLevelDomain {
+public abstract class TopLevelDomain {
+
+	/** Make no instances. */
+	private TopLevelDomain() {throw new AssertionError();}
 
 	private static final Logger logger = Logger.getLogger(TopLevelDomain.class.getName());
 
@@ -410,7 +413,7 @@ public class TopLevelDomain {
 	/**
 	 * Lock for snapshot.
 	 */
-	private static class Lock {}
+	private static class Lock {/* Empty lock class to help heap profile */}
 	private static final Lock lock = new Lock();
 
 	/**
@@ -664,11 +667,5 @@ public class TopLevelDomain {
 				logger.info("Background update completed");
 			}
 		}
-	}
-
-	/**
-	 * Make no instances.
-	 */
-	private TopLevelDomain() {
 	}
 }
