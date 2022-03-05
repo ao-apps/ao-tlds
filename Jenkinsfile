@@ -467,7 +467,7 @@ pipeline {
 		disableConcurrentBuilds(abortPrevious: true)
 		quietPeriod(quietPeriod)
 		skipDefaultCheckout()
-		timeout(time: 2, unit: 'HOURS')
+		timeout(time: 24, unit: 'HOURS')
 		buildDiscarder(logRotator(numToKeepStr:'50'))
 	}
 	parameters {
