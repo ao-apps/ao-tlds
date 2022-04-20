@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--
 ao-tlds - Self-updating Java API to get top-level domains.
-Copyright (C) 2016, 2017, 2019, 2020, 2021  AO Industries, Inc.
+Copyright (C) 2016, 2017, 2019, 2020, 2021, 2022  AO Industries, Inc.
     support@aoindustries.com
     7262 Bull Pen Cir
     Mobile, AL 36695
@@ -22,84 +22,84 @@ You should have received a copy of the GNU Lesser General Public License
 along with ao-tlds.  If not, see <https://www.gnu.org/licenses/>.
 -->
 <jsp:root
-	xmlns:ao="https://oss.aoapps.com/taglib/"
-	xmlns:core="https://semanticcms.com/core/taglib/"
-	xmlns:jsp="http://java.sun.com/JSP/Page"
-	xmlns:section="https://semanticcms.com/section/taglib/"
-	version="2.1"
+  xmlns:ao="https://oss.aoapps.com/taglib/"
+  xmlns:core="https://semanticcms.com/core/taglib/"
+  xmlns:jsp="http://java.sun.com/JSP/Page"
+  xmlns:section="https://semanticcms.com/section/taglib/"
+  version="2.1"
 >
-	<jsp:directive.page language="java" pageEncoding="UTF-8" />
-	<jsp:directive.page session="false" />
-	<core:page
-		title="@{documented.name}"
-		description="@{documented.description}"
-		datePublished="2016-12-05T18:27:49-06:00"
-		dateModified="2021-07-16T03:48:08-05:00"
-	>
-		<core:child page="changelog.jspx" />
-		<core:child page="apidocs/index.jspx" />
-		<header>
-			<ao:include
-				page="/ao-badges/badges.inc.jspx"
-				arg.projectStatus="current-stable"
-				arg.managementStatus="production"
-				arg.packagingStatus="active"
-				arg.javaseVersion="@{documented.javase.version}"
-				arg.semanticVersioning="2.0.0"
-				arg.license="lgpl-3.0"
-				arg.scmUrl="@{project.scm.url}"
-				arg.githubBuildWorkflow="Build"
-				arg.mavenBadge="maven-central"
-				arg.groupId="@{project.groupId}"
-				arg.artifactId="@{documented.artifactId}"
-				arg.sonarQualityGate="true"
-				arg.sonarLinesOfCode="true"
-				arg.sonarReliability="true"
-				arg.sonarSecurity="true"
-				arg.sonarMaintainability="true"
-				arg.sonarCoverage="true"
-			/>
-		</header>
-		<p>
-			@{documented.description}
-		</p>
-		<section:nav label="Project Links">
-			<ul>
-				<li><core:link page="index.jspx">Project Home</core:link></li>
-				<li><core:link page="changelog.jspx">Changelog</core:link></li>
-				<li><core:link page="apidocs/index.jspx">API Docs</core:link></li>
-				<li><ao:a href="https://search.maven.org/artifact/${ao:encodeURIComponent('@{project.groupId}')}/${ao:encodeURIComponent('@{documented.artifactId}')}">Maven Central Repository</ao:a></li>
-				<li><ao:a href="@{project.scm.url}">GitHub</ao:a></li>
-			</ul>
-		</section:nav>
-		<section:section label="Features">
-			<ul>
-				<li>Background self-updating from <ao:a href="https://data.iana.org/TLD/tlds-alpha-by-domain.txt">official iana.org source</ao:a>.</li>
-				<li>Stores updates in <ao:a href="https://docs.oracle.com/javase/7/docs/technotes/guides/preferences/">Java Preferences API</ao:a> to reduce queries of data.iana.org.</li>
-			</ul>
-		</section:section>
-		<section:section label="Motivation">
-			<p>
-				<ao:a href="https://wikipedia.org/wiki/Top-level_domain">Top level domains</ao:a> have become a moving target.
-				Any API that includes a hard-coded list, array, enumeration, or even an external flatfile of top level domains will
-				require some routine maintenance to update the list.  We support many well-established and largely set-it-and-forget-it
-				apps that routinely go long time periods without updates.  We prefer to write low maintenance code and existing
-				solutions do not fulfill this requirement.
-			</p>
-		</section:section>
-		<section:aside label="Evaluated Alternatives">
-			<ul>
-				<li>
-					<ao:a href="https://commons.apache.org/proper/commons-validator/apidocs/org/apache/commons/validator/routines/DomainValidator.html">Apache Commons Validator</ao:a>
-					- Includes a hard-coded list of TLDs.  Use of this API requires occasional updates of JARs and redeploys.
-				</li>
-				<li>
-					<ao:a href="http://google.github.io/guava/releases/5.0/api/docs/com/google/common/net/InternetDomainName.html">Google Guava InternetDomainName</ao:a>
-					- Also includes a hard-coded list of TLDs in
-					<ao:a href="http://grepcode.com/file/repo1.maven.org/maven2/com.google.guava/guava/r06/com/google/common/net/TldPatterns.java">com.google.common.net.TldPatterns</ao:a>.
-					Same issue with maintenance applies.
-				</li>
-			</ul>
-		</section:aside>
-	</core:page>
+  <jsp:directive.page language="java" pageEncoding="UTF-8" />
+  <jsp:directive.page session="false" />
+  <core:page
+    title="@{documented.name}"
+    description="@{documented.description}"
+    datePublished="2016-12-05T18:27:49-06:00"
+    dateModified="2021-07-16T03:48:08-05:00"
+  >
+    <core:child page="changelog.jspx" />
+    <core:child page="apidocs/index.jspx" />
+    <header>
+      <ao:include
+        page="/ao-badges/badges.inc.jspx"
+        arg.projectStatus="current-stable"
+        arg.managementStatus="production"
+        arg.packagingStatus="active"
+        arg.javaseVersion="@{documented.javase.version}"
+        arg.semanticVersioning="2.0.0"
+        arg.license="lgpl-3.0"
+        arg.scmUrl="@{project.scm.url}"
+        arg.githubBuildWorkflow="Build"
+        arg.mavenBadge="maven-central"
+        arg.groupId="@{project.groupId}"
+        arg.artifactId="@{documented.artifactId}"
+        arg.sonarQualityGate="true"
+        arg.sonarLinesOfCode="true"
+        arg.sonarReliability="true"
+        arg.sonarSecurity="true"
+        arg.sonarMaintainability="true"
+        arg.sonarCoverage="true"
+      />
+    </header>
+    <p>
+      @{documented.description}
+    </p>
+    <section:nav label="Project Links">
+      <ul>
+        <li><core:link page="index.jspx">Project Home</core:link></li>
+        <li><core:link page="changelog.jspx">Changelog</core:link></li>
+        <li><core:link page="apidocs/index.jspx">API Docs</core:link></li>
+        <li><ao:a href="https://search.maven.org/artifact/${ao:encodeURIComponent('@{project.groupId}')}/${ao:encodeURIComponent('@{documented.artifactId}')}">Maven Central Repository</ao:a></li>
+        <li><ao:a href="@{project.scm.url}">GitHub</ao:a></li>
+      </ul>
+    </section:nav>
+    <section:section label="Features">
+      <ul>
+        <li>Background self-updating from <ao:a href="https://data.iana.org/TLD/tlds-alpha-by-domain.txt">official iana.org source</ao:a>.</li>
+        <li>Stores updates in <ao:a href="https://docs.oracle.com/javase/7/docs/technotes/guides/preferences/">Java Preferences API</ao:a> to reduce queries of data.iana.org.</li>
+      </ul>
+    </section:section>
+    <section:section label="Motivation">
+      <p>
+        <ao:a href="https://wikipedia.org/wiki/Top-level_domain">Top level domains</ao:a> have become a moving target.
+        Any API that includes a hard-coded list, array, enumeration, or even an external flatfile of top level domains will
+        require some routine maintenance to update the list.  We support many well-established and largely set-it-and-forget-it
+        apps that routinely go long time periods without updates.  We prefer to write low maintenance code and existing
+        solutions do not fulfill this requirement.
+      </p>
+    </section:section>
+    <section:aside label="Evaluated Alternatives">
+      <ul>
+        <li>
+          <ao:a href="https://commons.apache.org/proper/commons-validator/apidocs/org/apache/commons/validator/routines/DomainValidator.html">Apache Commons Validator</ao:a>
+          - Includes a hard-coded list of TLDs.  Use of this API requires occasional updates of JARs and redeploys.
+        </li>
+        <li>
+          <ao:a href="http://google.github.io/guava/releases/5.0/api/docs/com/google/common/net/InternetDomainName.html">Google Guava InternetDomainName</ao:a>
+          - Also includes a hard-coded list of TLDs in
+          <ao:a href="http://grepcode.com/file/repo1.maven.org/maven2/com.google.guava/guava/r06/com/google/common/net/TldPatterns.java">com.google.common.net.TldPatterns</ao:a>.
+          Same issue with maintenance applies.
+        </li>
+      </ul>
+    </section:aside>
+  </core:page>
 </jsp:root>
