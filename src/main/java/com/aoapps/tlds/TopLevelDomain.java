@@ -88,6 +88,7 @@ public final class TopLevelDomain {
    * The URL accessed to update the list.
    */
   private static final URL DATA_URL;
+
   static {
     try {
       DATA_URL = new URL("https://data.iana.org/TLD/tlds-alpha-by-domain.txt");
@@ -110,36 +111,36 @@ public final class TopLevelDomain {
      * The minimum number of milliseconds between updates after a success.
      */
     private static final long UPDATE_INTERVAL_SUCCESS_MIN =
-      DEBUG
-      ? (         60L * 60 * 1000) // 1 hour
-      : (7L * 24 * 60 * 60 * 1000) // 7 days
+        DEBUG
+            ? (         60L * 60 * 1000) // 1 hour
+            : (7L * 24 * 60 * 60 * 1000) // 7 days
     ;
 
     /**
      * The randomized offset number of milliseconds between updates after a success.
      */
     private static final int UPDATE_INTERVAL_SUCCESS_DEVIATION =
-      DEBUG
-      ? (      5 * 60 * 1000) // 5 minutes
-      : (24 * 60 * 60 * 1000) // 1 day
+        DEBUG
+            ? (      5 * 60 * 1000) // 5 minutes
+            : (24 * 60 * 60 * 1000) // 1 day
     ;
 
     /**
      * The minimum number of milliseconds between updates after a failure.
      */
     private static final long UPDATE_INTERVAL_FAILURE_MIN =
-      DEBUG
-      ? (     10L * 60 * 1000) // 10 minutes
-      : (24L * 60 * 60 * 1000) // 1 day
+        DEBUG
+            ? (     10L * 60 * 1000) // 10 minutes
+            : (24L * 60 * 60 * 1000) // 1 day
     ;
 
     /**
      * The randomized offset number of milliseconds between updates after a failure.
      */
     private static final int UPDATE_INTERVAL_FAILURE_DEVIATION =
-      DEBUG
-      ? (         60 * 1000) // 1 minute
-      : (4 * 60 * 60 * 1000) // 4 hours
+        DEBUG
+            ? (         60 * 1000) // 1 minute
+            : (4 * 60 * 60 * 1000) // 4 hours
     ;
 
     private static final Preferences prefs = Preferences.userNodeForPackage(Snapshot.class); // systemNodeForPackage not available as regular user in Linux
@@ -182,11 +183,11 @@ public final class TopLevelDomain {
     private final Map<String, String> lowerTldMap;
 
     private Snapshot(
-      String source,
-      long lastUpdatedTime,
-      boolean isBootstrap,
-      boolean lastUpdateSuccessful,
-      long lastSuccessfulUpdateTime
+        String source,
+        long lastUpdatedTime,
+        boolean isBootstrap,
+        boolean lastUpdateSuccessful,
+        long lastSuccessfulUpdateTime
     ) throws IOException {
       this.source = source;
       ArrayList<String> newTopLevelDomains = new ArrayList<>();
@@ -273,10 +274,10 @@ public final class TopLevelDomain {
           return null;
         }
         if (logger.isLoggable(Level.FINE)) {
-          logger.fine("numChunks="+numChunks);
+          logger.fine("numChunks=" + numChunks);
         }
         StringBuilder sourceSB = new StringBuilder(numChunks * Preferences.MAX_VALUE_LENGTH);
-        for (int i=0; i<numChunks; i++) {
+        for (int i = 0; i < numChunks; i++) {
           String chunk = prefs.get("TopLevelDomain.source." + i, null);
           if (chunk == null) {
             if (logger.isLoggable(Level.WARNING)) {
@@ -292,15 +293,15 @@ public final class TopLevelDomain {
       boolean lastUpdateSuccessful = prefs.getBoolean("TopLevelDomain.lastUpdateSuccessful", false);
       long lastSuccessfulUpdateTime = prefs.getLong("TopLevelDomain.lastSuccessfulUpdateTime", Long.MIN_VALUE);
       if (logger.isLoggable(Level.FINE)) {
-        logger.fine("lastUpdatedTime="+new Date(lastUpdatedTime));
-        logger.fine("lastUpdateSuccessful="+lastUpdateSuccessful);
-        logger.fine("lastSuccessfulUpdateTime="+new Date(lastSuccessfulUpdateTime));
+        logger.fine("lastUpdatedTime=" + new Date(lastUpdatedTime));
+        logger.fine("lastUpdateSuccessful=" + lastUpdateSuccessful);
+        logger.fine("lastSuccessfulUpdateTime=" + new Date(lastSuccessfulUpdateTime));
       }
       byte[] md5sum = prefs.getByteArray("TopLevelDomain.md5sum", null);
       if (
-        lastUpdatedTime != Long.MIN_VALUE
-        && lastSuccessfulUpdateTime != Long.MIN_VALUE
-        && md5sum != null
+          lastUpdatedTime != Long.MIN_VALUE
+              && lastSuccessfulUpdateTime != Long.MIN_VALUE
+              && md5sum != null
       ) {
         try {
           Snapshot newSnapshot = new Snapshot(source, lastUpdatedTime, false, lastUpdateSuccessful, lastSuccessfulUpdateTime);
@@ -328,9 +329,9 @@ public final class TopLevelDomain {
      * Loads this snapshot from the provided reader.
      */
     private static Snapshot loadFromReader(
-      Reader in,
-      long lastUpdatedTime,
-      boolean isBootstrap
+        Reader in,
+        long lastUpdatedTime,
+        boolean isBootstrap
     ) throws IOException {
       StringBuilder sb = new StringBuilder();
       char[] buff = new char[4096];
@@ -347,13 +348,13 @@ public final class TopLevelDomain {
     private void saveToPreferences() throws BackingStoreException {
       logger.fine("Saving to preferences");
       int numChunks = 0;
-      for (int pos=0, len=source.length(); pos<len; pos+=Preferences.MAX_VALUE_LENGTH) {
+      for (int pos = 0, len = source.length(); pos < len; pos += Preferences.MAX_VALUE_LENGTH) {
         prefs.put(
-          "TopLevelDomain.source." + numChunks++,
-          source.substring(
-            pos,
-            Math.min(len, pos + Preferences.MAX_VALUE_LENGTH)
-          )
+            "TopLevelDomain.source." + numChunks++,
+            source.substring(
+                pos,
+                Math.min(len, pos + Preferences.MAX_VALUE_LENGTH)
+            )
         );
       }
       prefs.putInt("TopLevelDomain.source.numChunks", numChunks);
@@ -420,7 +421,9 @@ public final class TopLevelDomain {
   /**
    * Lock for snapshot.
    */
-  private static class Lock {/* Empty lock class to help heap profile */}
+  private static class Lock {
+    // Empty lock class to help heap profile
+  }
   private static final Lock lock = new Lock();
 
   /**
@@ -452,18 +455,18 @@ public final class TopLevelDomain {
             DateFormat dateFormat = DateFormat.getDateTimeInstance();
             if (snapshot == null) {
               logger.info(
-                "Update not found in preferences, using hard-coded bootstrap dated \""
-                + dateFormat.format(new Date(LAST_UPDATED))
-                + "\""
+                  "Update not found in preferences, using hard-coded bootstrap dated \""
+                      + dateFormat.format(new Date(LAST_UPDATED))
+                      + "\""
               );
             } else {
               assert snapshot.lastSuccessfulUpdateTime < LAST_UPDATED;
               logger.info(
-                "Update from preferences dated \""
-                + dateFormat.format(new Date(snapshot.lastSuccessfulUpdateTime))
-                + "\" is older than hard-coded bootstrap dated \""
-                + dateFormat.format(new Date(LAST_UPDATED))
-                + "\", using hard-coded bootstrap instead"
+                  "Update from preferences dated \""
+                      + dateFormat.format(new Date(snapshot.lastSuccessfulUpdateTime))
+                      + "\" is older than hard-coded bootstrap dated \""
+                      + dateFormat.format(new Date(LAST_UPDATED))
+                      + "\", using hard-coded bootstrap instead"
               );
             }
           }
@@ -482,23 +485,23 @@ public final class TopLevelDomain {
       if (updateThread == null) {
         final long currentTime = System.currentTimeMillis();
         if (
-          currentTime >= snapshot.nextUpdateAfter
-          || currentTime <= snapshot.nextUpdateBefore
+            currentTime >= snapshot.nextUpdateAfter
+                || currentTime <= snapshot.nextUpdateBefore
         ) {
           if (logger.isLoggable(Level.FINE)) {
             logger.fine("Time for background update: currentTime=" + new Date(currentTime)
-              + ", nextUpdateAfter=" + new Date(snapshot.nextUpdateAfter)
-              + ", nextUpdateBefore=" + new Date(snapshot.nextUpdateBefore)
+                + ", nextUpdateAfter=" + new Date(snapshot.nextUpdateAfter)
+                + ", nextUpdateBefore=" + new Date(snapshot.nextUpdateBefore)
             );
           }
           // Reload from preferences, just in case another process has already updated
           logger.fine("Reloading from preferences before beginning background update");
           Snapshot newSnapshot = Snapshot.loadFromPreferences();
           if (
-            newSnapshot != null
-            && snapshot.lastUpdatedTime != newSnapshot.lastUpdatedTime
-            && currentTime < newSnapshot.nextUpdateAfter
-            && currentTime > newSnapshot.nextUpdateBefore
+              newSnapshot != null
+                  && snapshot.lastUpdatedTime != newSnapshot.lastUpdatedTime
+                  && currentTime < newSnapshot.nextUpdateAfter
+                  && currentTime > newSnapshot.nextUpdateBefore
           ) {
             // newSnapshot is valid, use it
             logger.fine("Update from preferences is current, using it instead of beginning background update");
@@ -507,68 +510,68 @@ public final class TopLevelDomain {
             // Begin background update
             logger.fine("Spawning background update thread");
             updateThread = new Thread(
-              () -> {
-                try {
-                  logger.fine("Connecting to " + DATA_URL);
-                  URLConnection conn = DATA_URL.openConnection();
-                  String encoding = conn.getContentEncoding();
-                  if (encoding == null) {
-                    logger.fine("Did not get encoding, assuming encoding: " + DATA_ENCODING);
-                    encoding = DATA_ENCODING.name();
-                  } else {
-                    if (logger.isLoggable(Level.FINE)) {
-                      logger.fine("Got encoding: " + encoding);
-                    }
-                  }
-                  logger.fine("Getting input");
-                  Reader in = new InputStreamReader(conn.getInputStream(), encoding);
+                () -> {
                   try {
-                    logger.fine("Reading top level domains from input");
-                    Snapshot loadedSnapshot = Snapshot.loadFromReader(in, currentTime, false);
-                    synchronized (lock) {
-                      snapshot = loadedSnapshot;
-                      try {
-                        logger.fine("Saving updated top level domains to preferences");
-                        snapshot.saveToPreferences();
-                      } catch (BackingStoreException e) {
-                        logger.log(Level.SEVERE, "Unable to save new snapshot to preferences", e);
+                    logger.fine("Connecting to " + DATA_URL);
+                    URLConnection conn = DATA_URL.openConnection();
+                    String encoding = conn.getContentEncoding();
+                    if (encoding == null) {
+                      logger.fine("Did not get encoding, assuming encoding: " + DATA_ENCODING);
+                      encoding = DATA_ENCODING.name();
+                    } else {
+                      if (logger.isLoggable(Level.FINE)) {
+                        logger.fine("Got encoding: " + encoding);
                       }
+                    }
+                    logger.fine("Getting input");
+                    Reader in = new InputStreamReader(conn.getInputStream(), encoding);
+                    try {
+                      logger.fine("Reading top level domains from input");
+                      Snapshot loadedSnapshot = Snapshot.loadFromReader(in, currentTime, false);
+                      synchronized (lock) {
+                        snapshot = loadedSnapshot;
+                        try {
+                          logger.fine("Saving updated top level domains to preferences");
+                          snapshot.saveToPreferences();
+                        } catch (BackingStoreException e) {
+                          logger.log(Level.SEVERE, "Unable to save new snapshot to preferences", e);
+                        }
+                      }
+                    } finally {
+                      logger.fine("Closing input");
+                      in.close();
+                    }
+                  } catch (ThreadDeath td) {
+                    throw td;
+                  } catch (Throwable t) {
+                    logger.log(Level.SEVERE, "Unable to load new snapshot", t);
+                    try {
+                      synchronized (lock) {
+                        logger.fine("Saving failed update of top level domains to preferences");
+                        snapshot = new Snapshot(
+                            snapshot.source,
+                            currentTime,
+                            false,
+                            false,
+                            snapshot.lastSuccessfulUpdateTime
+                        );
+                        try {
+                          snapshot.saveToPreferences();
+                        } catch (BackingStoreException e2) {
+                          logger.log(Level.SEVERE, "Unable to save new snapshot to preferences", e2);
+                        }
+                      }
+                    } catch (IOException e2) {
+                      logger.log(Level.SEVERE, "Unable to update existing snapshot to unsuccessful", e2);
                     }
                   } finally {
-                    logger.fine("Closing input");
-                    in.close();
-                  }
-                } catch (ThreadDeath td) {
-                  throw td;
-                } catch (Throwable t) {
-                  logger.log(Level.SEVERE, "Unable to load new snapshot", t);
-                  try {
                     synchronized (lock) {
-                      logger.fine("Saving failed update of top level domains to preferences");
-                      snapshot = new Snapshot(
-                        snapshot.source,
-                        currentTime,
-                        false,
-                        false,
-                        snapshot.lastSuccessfulUpdateTime
-                      );
-                      try {
-                        snapshot.saveToPreferences();
-                      } catch (BackingStoreException e2) {
-                        logger.log(Level.SEVERE, "Unable to save new snapshot to preferences", e2);
-                      }
+                      updateThread = null;
+                      lock.notifyAll();
                     }
-                  } catch (IOException e2) {
-                    logger.log(Level.SEVERE, "Unable to update existing snapshot to unsuccessful", e2);
                   }
-                } finally {
-                  synchronized (lock) {
-                    updateThread = null;
-                    lock.notifyAll();
-                  }
-                }
-              },
-              TopLevelDomain.class.getName() + ".updateThread"
+                },
+                TopLevelDomain.class.getName() + ".updateThread"
             );
             updateThread.start();
           }
