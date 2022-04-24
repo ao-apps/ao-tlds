@@ -120,6 +120,9 @@ def upstreamProjects = [
  * mavenOpts            The Maven Java options.                                           *
  *                      Defaults to '-Djansi.force' for colorful logs                     *
  *                                                                                        *
+ * mavenOptsJdk16       The Maven Java options for JDK 16+.                               *
+ *                      Defaults to exporting Java compiler for rewrite-maven-plugin.     *
+ *                                                                                        *
  * extraProfiles        An array of additional profiles to pass to Maven.                 *
  *                      Defaults to []                                                    *
  *                                                                                        *
@@ -446,6 +449,10 @@ if (!binding.hasVariable('maven')) {
 if (!binding.hasVariable('mavenOpts')) {
   binding.setVariable('mavenOpts', '-Djansi.force')
 }
+if (!binding.hasVariable('mavenOptsJdk16')) {
+  // See https://docs.openrewrite.org/getting-started/getting-started#running-on-jdk-16-and-newer
+  binding.setVariable('mavenOptsJdk16', '--add-exports jdk.compiler/com.sun.tools.javac.code=ALL-UNNAMED --add-exports jdk.compiler/com.sun.tools.javac.comp=ALL-UNNAMED --add-exports jdk.compiler/com.sun.tools.javac.file=ALL-UNNAMED --add-exports jdk.compiler/com.sun.tools.javac.jvm=ALL-UNNAMED --add-exports jdk.compiler/com.sun.tools.javac.main=ALL-UNNAMED --add-exports jdk.compiler/com.sun.tools.javac.model=ALL-UNNAMED --add-exports jdk.compiler/com.sun.tools.javac.processing=ALL-UNNAMED --add-exports jdk.compiler/com.sun.tools.javac.tree=ALL-UNNAMED --add-exports jdk.compiler/com.sun.tools.javac.util=ALL-UNNAMED')
+}
 if (!binding.hasVariable('extraProfiles')) {
   binding.setVariable('extraProfiles', [])
 }
@@ -643,7 +650,7 @@ pipeline {
         sh "${niceCmd}git verify-commit HEAD"
         sh "${niceCmd}git reset --hard"
         // git clean -fdx was iterating all of /.m2 despite being ignored
-        sh "${niceCmd}git clean -fx -e ${(projectDir == '.') ? '/.m2' : ('/' + projectDir + '/.m2')}"
+        sh "${niceCmd}git clean -fx -e ${(projectDir == '.') ? '/.m2' : ('/' + projectDir + '/.m2')} -e ${(projectDir == '.') ? '/.rewrite-cache' : ('/' + projectDir + '/.rewrite-cache')}"
         // Make sure working tree not modified after checkout
         sh """#!/bin/bash
 s="\$(${niceCmd}git status --short)"
@@ -682,7 +689,7 @@ fi
               dir(projectDir) {
                 withMaven(
                   maven: maven,
-                  mavenOpts: mavenOpts,
+                  mavenOpts: "${(jdk == '1.8' || jdk == '11') ? mavenOpts : (mavenOpts + ' ' + mavenOptsJdk16)}",
                   mavenLocalRepo: mavenLocalRepo,
                   jdk: "jdk-$jdk"
                 ) {
@@ -738,7 +745,7 @@ fi
               dir(projectDir) {
                 withMaven(
                   maven: maven,
-                  mavenOpts: mavenOpts,
+                  mavenOpts: "${(testJdk == '1.8' || testJdk == '11') ? mavenOpts : (mavenOpts + ' ' + mavenOptsJdk16)}",
                   mavenLocalRepo: mavenLocalRepo,
                   jdk: "jdk-$testJdk"
                 ) {
@@ -781,7 +788,7 @@ fi
 """
           withMaven(
             maven: maven,
-            mavenOpts: mavenOpts,
+            mavenOpts: "${(deployJdk == '1.8' || deployJdk == '11') ? mavenOpts : (mavenOpts + ' ' + mavenOptsJdk16)}",
             mavenLocalRepo: '.m2/repository',
             jdk: "jdk-$deployJdk"
           ) {
@@ -823,7 +830,7 @@ fi
           withSonarQubeEnv(installationName: 'AO SonarQube') {
             withMaven(
               maven: maven,
-              mavenOpts: mavenOpts,
+              mavenOpts: "${(deployJdk == '1.8' || deployJdk == '11') ? mavenOpts : (mavenOpts + ' ' + mavenOptsJdk16)}",
               mavenLocalRepo: '.m2/repository',
               jdk: "jdk-$deployJdk"
             ) {

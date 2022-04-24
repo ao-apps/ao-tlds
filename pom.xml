@@ -196,6 +196,20 @@ along with ao-tlds.  If not, see <https://www.gnu.org/licenses/>.
         </executions>
       </plugin>
       <plugin>
+        <!-- TODO: rewrite-maven-plugin 4.22.2 says "Changes have been made to" but nothing changed and dryRun fails -->
+        <groupId>org.openrewrite.maven</groupId><artifactId>rewrite-maven-plugin</artifactId>
+        <configuration>
+          <!--
+            Exclusion seems to not work as documented at https://docs.openrewrite.org/reference/rewrite-maven-plugin
+            Disabling fail instead:
+          <exclusions>
+            <exclude>**/com/aoapps/tlds/TopLevelDomain.java</exclude>
+          </exclusions>
+          -->
+          <failOnDryRunResults>false</failOnDryRunResults>
+        </configuration>
+      </plugin>
+      <plugin>
         <groupId>org.apache.maven.plugins</groupId><artifactId>maven-checkstyle-plugin</artifactId>
         <configuration>
           <!-- TODO: Clean-up Checkstyle -->
