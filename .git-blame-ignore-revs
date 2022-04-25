@@ -16,3 +16,6 @@
 
 # Converted spaces to tabs.
 b9a0d3fdec5bd9be79423515acdbde5c8883a858
+
+# Performed automatic source code clean-up with rewrite-maven-plugin
+1ac360acdb32bb6bc453fa4c6bb8df5b1da283c7
