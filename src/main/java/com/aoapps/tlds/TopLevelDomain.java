@@ -422,7 +422,9 @@ public final class TopLevelDomain {
    * Lock for snapshot.
    */
   private static class Lock {
-    // Empty lock class to help heap profile
+    private Lock() {
+      // Empty lock class to help heap profile
+    }
   }
   private static final Lock lock = new Lock();
 
