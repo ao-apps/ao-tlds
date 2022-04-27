@@ -28,4 +28,4 @@ module com.aoapps.tlds {
   // Java SE
   requires java.logging;
   requires java.prefs;
-}
+} // TODO: Avoiding rewrite-maven-plugin-4.22.2 truncation
