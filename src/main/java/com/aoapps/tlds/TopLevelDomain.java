@@ -112,36 +112,32 @@ public final class TopLevelDomain {
      */
     private static final long UPDATE_INTERVAL_SUCCESS_MIN =
         DEBUG
-            ? (         60L * 60 * 1000) // 1 hour
-            : (7L * 24 * 60 * 60 * 1000) // 7 days
-    ;
+            ?          (60L * 60 * 1000)  // 1 hour
+            : (7L * 24 * 60 * 60 * 1000); // 7 days
 
     /**
      * The randomized offset number of milliseconds between updates after a success.
      */
     private static final int UPDATE_INTERVAL_SUCCESS_DEVIATION =
         DEBUG
-            ? (      5 * 60 * 1000) // 5 minutes
-            : (24 * 60 * 60 * 1000) // 1 day
-    ;
+            ?       (5 * 60 * 1000)  // 5 minutes
+            : (24 * 60 * 60 * 1000); // 1 day
 
     /**
      * The minimum number of milliseconds between updates after a failure.
      */
     private static final long UPDATE_INTERVAL_FAILURE_MIN =
         DEBUG
-            ? (     10L * 60 * 1000) // 10 minutes
-            : (24L * 60 * 60 * 1000) // 1 day
-    ;
+            ?      (10L * 60 * 1000)  // 10 minutes
+            : (24L * 60 * 60 * 1000); // 1 day
 
     /**
      * The randomized offset number of milliseconds between updates after a failure.
      */
     private static final int UPDATE_INTERVAL_FAILURE_DEVIATION =
         DEBUG
-            ? (         60 * 1000) // 1 minute
-            : (4 * 60 * 60 * 1000) // 4 hours
-    ;
+            ?          (60 * 1000)  // 1 minute
+            : (4 * 60 * 60 * 1000); // 4 hours
 
     private static final Preferences prefs = Preferences.userNodeForPackage(Snapshot.class); // systemNodeForPackage not available as regular user in Linux
 
@@ -192,70 +188,70 @@ public final class TopLevelDomain {
       this.source = source;
       ArrayList<String> newTopLevelDomains = new ArrayList<>();
       ArrayList<String> newComments = new ArrayList<>();
-      {
-        BufferedReader in = new BufferedReader(new StringReader(source));
-        String line;
-        while ((line = in.readLine()) != null) {
-          if (line.startsWith("#")) {
-            newComments.add(line);
-          } else {
-            newTopLevelDomains.add(line.intern());
+        {
+          BufferedReader in = new BufferedReader(new StringReader(source));
+          String line;
+          while ((line = in.readLine()) != null) {
+            if (line.startsWith("#")) {
+              newComments.add(line);
+            } else {
+              newTopLevelDomains.add(line.intern());
+            }
           }
+          newTopLevelDomains.trimToSize();
+          newComments.trimToSize();
         }
-        newTopLevelDomains.trimToSize();
-        newComments.trimToSize();
-      }
       this.topLevelDomains = Collections.unmodifiableList(newTopLevelDomains);
       this.comments = Collections.unmodifiableList(newComments);
       this.lastUpdatedTime = lastUpdatedTime;
       this.isBootstrap = isBootstrap;
       this.lastUpdateSuccessful = lastUpdateSuccessful;
       this.lastSuccessfulUpdateTime = lastSuccessfulUpdateTime;
-      // Compute the MD5 sum
-      {
-        ByteArrayOutputStream bout = new ByteArrayOutputStream();
-        try (DataOutputStream out = new DataOutputStream(bout)) {
-          out.write(source.getBytes(DATA_ENCODING));
-          out.writeLong(lastUpdatedTime);
-          out.writeBoolean(lastUpdateSuccessful);
-          out.writeLong(lastSuccessfulUpdateTime);
+        // Compute the MD5 sum
+        {
+          ByteArrayOutputStream bout = new ByteArrayOutputStream();
+          try (DataOutputStream out = new DataOutputStream(bout)) {
+            out.write(source.getBytes(DATA_ENCODING));
+            out.writeLong(lastUpdatedTime);
+            out.writeBoolean(lastUpdateSuccessful);
+            out.writeLong(lastSuccessfulUpdateTime);
+          }
+          try {
+            MessageDigest md = MessageDigest.getInstance("MD5");
+            this.md5sum = md.digest(bout.toByteArray());
+          } catch (NoSuchAlgorithmException e) {
+            throw new AssertionError("MD5 is expected to be available on all platforms", e);
+          }
         }
-        try {
-          MessageDigest md = MessageDigest.getInstance("MD5");
-          this.md5sum = md.digest(bout.toByteArray());
-        } catch (NoSuchAlgorithmException e) {
-          throw new AssertionError("MD5 is expected to be available on all platforms", e);
+        // Random next update time
+        {
+          long updateMin;
+          int updateDeviation;
+          if (lastUpdateSuccessful) {
+            updateMin = UPDATE_INTERVAL_SUCCESS_MIN;
+            updateDeviation = UPDATE_INTERVAL_SUCCESS_DEVIATION;
+          } else {
+            updateMin = UPDATE_INTERVAL_FAILURE_MIN;
+            updateDeviation = UPDATE_INTERVAL_FAILURE_DEVIATION;
+          }
+          int randomDeviation = fastRandom.nextInt(updateDeviation);
+          this.nextUpdateAfter = lastUpdatedTime + updateMin + randomDeviation;
+          this.nextUpdateBefore = lastUpdatedTime - updateMin - randomDeviation;
+          if (logger.isLoggable(Level.FINE)) {
+            logger.fine("updateMin=" + updateMin);
+            logger.fine("updateDeviation=" + updateDeviation);
+            logger.fine("randomDeviation=" + randomDeviation);
+            logger.fine("nextUpdateAfter=" + new Date(nextUpdateAfter));
+            logger.fine("nextUpdateBefore=" + new Date(nextUpdateBefore));
+          }
         }
-      }
-      // Random next update time
-      {
-        long updateMin;
-        int updateDeviation;
-        if (lastUpdateSuccessful) {
-          updateMin = UPDATE_INTERVAL_SUCCESS_MIN;
-          updateDeviation = UPDATE_INTERVAL_SUCCESS_DEVIATION;
-        } else {
-          updateMin = UPDATE_INTERVAL_FAILURE_MIN;
-          updateDeviation = UPDATE_INTERVAL_FAILURE_DEVIATION;
+        // Compute lowerTldMap
+        {
+          lowerTldMap = AoCollections.newHashMap(topLevelDomains.size());
+          for (String tld : topLevelDomains) {
+            lowerTldMap.put(tld.toLowerCase(Locale.ROOT).intern(), tld);
+          }
         }
-        int randomDeviation = fastRandom.nextInt(updateDeviation);
-        this.nextUpdateAfter = lastUpdatedTime + updateMin + randomDeviation;
-        this.nextUpdateBefore = lastUpdatedTime - updateMin - randomDeviation;
-        if (logger.isLoggable(Level.FINE)) {
-          logger.fine("updateMin=" + updateMin);
-          logger.fine("updateDeviation=" + updateDeviation);
-          logger.fine("randomDeviation=" + randomDeviation);
-          logger.fine("nextUpdateAfter=" + new Date(nextUpdateAfter));
-          logger.fine("nextUpdateBefore=" + new Date(nextUpdateBefore));
-        }
-      }
-      // Compute lowerTldMap
-      {
-        lowerTldMap = AoCollections.newHashMap(topLevelDomains.size());
-        for (String tld : topLevelDomains) {
-          lowerTldMap.put(tld.toLowerCase(Locale.ROOT).intern(), tld);
-        }
-      }
     }
 
     /**
@@ -267,28 +263,28 @@ public final class TopLevelDomain {
     private static Snapshot loadFromPreferences() {
       logger.fine("Loading from preferences");
       String source;
-      {
-        int numChunks = prefs.getInt("TopLevelDomain.source.numChunks", Integer.MIN_VALUE);
-        if (numChunks == Integer.MIN_VALUE) {
-          logger.fine("Not found in preferences");
-          return null;
-        }
-        if (logger.isLoggable(Level.FINE)) {
-          logger.fine("numChunks=" + numChunks);
-        }
-        StringBuilder sourceSB = new StringBuilder(numChunks * Preferences.MAX_VALUE_LENGTH);
-        for (int i = 0; i < numChunks; i++) {
-          String chunk = prefs.get("TopLevelDomain.source." + i, null);
-          if (chunk == null) {
-            if (logger.isLoggable(Level.WARNING)) {
-              logger.log(Level.WARNING, "Unable to load top level domains from preferences, chunk missing: " + i);
-            }
+        {
+          int numChunks = prefs.getInt("TopLevelDomain.source.numChunks", Integer.MIN_VALUE);
+          if (numChunks == Integer.MIN_VALUE) {
+            logger.fine("Not found in preferences");
             return null;
           }
-          sourceSB.append(chunk);
+          if (logger.isLoggable(Level.FINE)) {
+            logger.fine("numChunks=" + numChunks);
+          }
+          StringBuilder sourceSb = new StringBuilder(numChunks * Preferences.MAX_VALUE_LENGTH);
+          for (int i = 0; i < numChunks; i++) {
+            String chunk = prefs.get("TopLevelDomain.source." + i, null);
+            if (chunk == null) {
+              if (logger.isLoggable(Level.WARNING)) {
+                logger.log(Level.WARNING, "Unable to load top level domains from preferences, chunk missing: " + i);
+              }
+              return null;
+            }
+            sourceSb.append(chunk);
+          }
+          source = sourceSb.toString();
         }
-        source = sourceSB.toString();
-      }
       long lastUpdatedTime = prefs.getLong("TopLevelDomain.lastUpdatedTime", Long.MIN_VALUE);
       boolean lastUpdateSuccessful = prefs.getBoolean("TopLevelDomain.lastUpdateSuccessful", false);
       long lastSuccessfulUpdateTime = prefs.getLong("TopLevelDomain.lastSuccessfulUpdateTime", Long.MIN_VALUE);
@@ -367,6 +363,13 @@ public final class TopLevelDomain {
     }
 
     /**
+     * Gets an unmodifiable list of the most recently retrieved top-level domains,
+     * in the case and order contained within
+     * <a href="https://data.iana.org/TLD/tlds-alpha-by-domain.txt">tlds-alpha-by-domain.txt</a>.
+     * <p>
+     * Each element is {@link String#intern() interned}.
+     * </p>
+     *
      * @see  TopLevelDomain#getTopLevelDomains()
      */
     @SuppressWarnings("ReturnOfCollectionOrArrayField") // Returning unmod
@@ -375,6 +378,10 @@ public final class TopLevelDomain {
     }
 
     /**
+     * Gets an unmodifiable list of the comments contained within
+     * <a href="https://data.iana.org/TLD/tlds-alpha-by-domain.txt">tlds-alpha-by-domain.txt</a>.
+     * All lines starting with {@code "#"} are considered to be comments.
+     *
      * @see  TopLevelDomain#getComments()
      */
     @SuppressWarnings("ReturnOfCollectionOrArrayField") // Returning unmod
@@ -383,6 +390,9 @@ public final class TopLevelDomain {
     }
 
     /**
+     * Gets the last time the list was updated, whether
+     * successful or not.
+     *
      * @see  TopLevelDomain#getLastUpdatedTime()
      */
     public long getLastUpdatedTime() {
@@ -390,6 +400,10 @@ public final class TopLevelDomain {
     }
 
     /**
+     * Gets whether or not this is the bundled bootstrap data.
+     *
+     * @return  {@code true} if this is the included bootstrap data, or {@code false} is this is auto-updated
+     *
      * @see  TopLevelDomain#isBootstrap()
      */
     public boolean isBootstrap() {
@@ -397,6 +411,8 @@ public final class TopLevelDomain {
     }
 
     /**
+     * Gets whether the last update was successful.
+     *
      * @see  TopLevelDomain#getLastUpdateSuccessful()
      */
     public boolean getLastUpdateSuccessful() {
@@ -404,6 +420,8 @@ public final class TopLevelDomain {
     }
 
     /**
+     * Gets the last time the list was successfully updated.
+     *
      * @see  TopLevelDomain#getLastSuccessfulUpdateTime()
      */
     public long getLastSuccessfulUpdateTime() {
@@ -411,6 +429,13 @@ public final class TopLevelDomain {
     }
 
     /**
+     * Provides a way to get the top level domain based on label (case-insensitive).
+     * <p>
+     * Any non-null returned value is {@link String#intern() interned}.
+     * </p>
+     *
+     * @return  The top level domain based on label (case-insensitive) or {@code null} if no match.
+     *
      * @see  TopLevelDomain#getByLabel(java.lang.String)
      */
     public String getByLabel(String label) {
@@ -426,6 +451,7 @@ public final class TopLevelDomain {
       // Empty lock class to help heap profile
     }
   }
+
   private static final Lock lock = new Lock();
 
   /**

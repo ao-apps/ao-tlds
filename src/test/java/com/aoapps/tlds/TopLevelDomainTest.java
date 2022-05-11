@@ -23,10 +23,14 @@
 
 package com.aoapps.tlds;
 
-import java.util.Date;
-import java.util.List;
 import static org.junit.Assert.assertTrue;
 
+import java.util.Date;
+import java.util.List;
+
+/**
+ * Tests {@link TopLevelDomain}.
+ */
 @SuppressWarnings("UseOfSystemOutOrSystemErr")
 public class TopLevelDomainTest {
 
