@@ -552,22 +552,23 @@ public final class TopLevelDomain {
                       }
                     }
                     logger.fine("Getting input");
+                    Snapshot loadedSnapshot;
                     Reader in = new InputStreamReader(conn.getInputStream(), encoding);
                     try {
                       logger.fine("Reading top level domains from input");
-                      Snapshot loadedSnapshot = Snapshot.loadFromReader(in, currentTime, false);
-                      synchronized (lock) {
-                        snapshot = loadedSnapshot;
-                        try {
-                          logger.fine("Saving updated top level domains to preferences");
-                          snapshot.saveToPreferences();
-                        } catch (BackingStoreException e) {
-                          logger.log(Level.SEVERE, "Unable to save new snapshot to preferences", e);
-                        }
-                      }
+                      loadedSnapshot = Snapshot.loadFromReader(in, currentTime, false);
                     } finally {
                       logger.fine("Closing input");
                       in.close();
+                    }
+                    synchronized (lock) {
+                      snapshot = loadedSnapshot;
+                      try {
+                        logger.fine("Saving updated top level domains to preferences");
+                        snapshot.saveToPreferences();
+                      } catch (BackingStoreException e) {
+                        logger.log(Level.SEVERE, "Unable to save new snapshot to preferences", e);
+                      }
                     }
                   } catch (ThreadDeath td) {
                     throw td;
