@@ -33,6 +33,7 @@ along with ao-tlds.  If not, see <https://www.gnu.org/licenses/>.
   <packaging>bundle</packaging>
 
   <properties>
+    <project.build.outputTimestamp>2023-02-08T21:06:04Z</project.build.outputTimestamp>
     <module.name>com.aoapps.tlds</module.name>
     <!-- Java 1.8 -->
     <javase.version>1.8</javase.version>
