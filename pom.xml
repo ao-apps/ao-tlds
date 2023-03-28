@@ -44,10 +44,6 @@ along with ao-tlds.  If not, see <https://www.gnu.org/licenses/>.
 
     <javadoc.breadcrumbs><![CDATA[<a target="${javadoc.target}" href="https://oss.aoapps.com/">AO OSS</a>
 / <a target="${javadoc.target}" href="${project.url}">TLDs</a>]]></javadoc.breadcrumbs>
-    <!-- SonarQube -->
-    <sonar.projectKey>${project.groupId}:${project.artifactId}</sonar.projectKey>
-    <sonar.organization>ao-apps</sonar.organization>
-    <sonar.host.url>https://sonarcloud.io</sonar.host.url>
   </properties>
 
   <name>AO TLDs</name>
