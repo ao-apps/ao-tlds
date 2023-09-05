@@ -38,8 +38,6 @@ along with ao-tlds.  If not, see <https://www.gnu.org/licenses/>.
     <javase.version>1.8</javase.version>
     <javase.release>8</javase.release>
     <javadoc.link.javase>${javadoc.link.javase.8}</javadoc.link.javase>
-    <!-- This must be set in your ~/.m2/settings.xml when building with JDK < 9 -->
-    <javase.bootclasspath>${javase.bootclasspath.8}</javase.bootclasspath>
 
     <javadoc.breadcrumbs><![CDATA[<a target="${javadoc.target}" href="https://oss.aoapps.com/">AO OSS</a>
 / <a target="${javadoc.target}" href="${project.url}">TLDs</a>]]></javadoc.breadcrumbs>
