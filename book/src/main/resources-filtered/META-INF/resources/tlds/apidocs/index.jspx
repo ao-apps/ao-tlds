@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--
 ao-tlds - Self-updating Java API to get top-level domains.
-Copyright (C) 2016, 2019, 2020, 2021, 2022  AO Industries, Inc.
+Copyright (C) 2016, 2019, 2020, 2021, 2022, 2023  AO Industries, Inc.
     support@aoindustries.com
     7262 Bull Pen Cir
     Mobile, AL 36695
@@ -32,8 +32,7 @@ along with ao-tlds.  If not, see <https://www.gnu.org/licenses/>.
   <jsp:directive.page session="false" />
   <jsp:output omit-xml-declaration="true" />
   <c:if test="${core:getCaptureLevel() == null and empty param.view and !param.navigation}">
-    <jsp:directive.page contentType="text/html" />
-    <ao:forward page="index.html" />
+    <ao:redirect page="index.html" statusCode="301" addLastModified="false" />
   </c:if>
   <core:page
     title="@{documented.name} ${ao:getProjectVersion('./', 'com.aoapps', 'ao-tlds', '¿@{project.version}?')} API Docs"
