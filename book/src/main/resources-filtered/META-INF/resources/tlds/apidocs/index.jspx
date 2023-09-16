@@ -39,5 +39,6 @@ along with ao-tlds.  If not, see <https://www.gnu.org/licenses/>.
     shortTitle="API Docs"
     datePublished="2016-12-05T18:27:49-06:00"
     dateModified="${ao:getLastModified('index.html')}"
+    allowRobots="false"
   />
 </jsp:root>
