@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--
 ao-tlds - Self-updating Java API to get top-level domains.
-Copyright (C) 2016, 2017, 2018, 2019, 2020, 2021, 2022  AO Industries, Inc.
+Copyright (C) 2016, 2017, 2018, 2019, 2020, 2021, 2022, 2023  AO Industries, Inc.
     support@aoindustries.com
     7262 Bull Pen Cir
     Mobile, AL 36695
@@ -39,7 +39,12 @@ along with ao-tlds.  If not, see <https://www.gnu.org/licenses/>.
     datePublished="2016-12-12T14:20:29-06:00"
     dateModified="2021-07-04T22:02:11-05:00"
   >
-    <c:if test="${fn:endsWith('@{project.version}', '-SNAPSHOT') and !fn:endsWith('@{project.version}', '-POST-SNAPSHOT')}">
+    <c:set var="latestRelease" value="2.0.0" />
+    <c:if test="${
+      fn:endsWith('@{project.version}', '-SNAPSHOT')
+      and !fn:endsWith('@{project.version}', '-POST-SNAPSHOT')
+      and '@{project.version}' != (latestRelease.concat('-SNAPSHOT'))
+    }">
       <changelog:release
         projectName="@{documented.name}"
         version="@{project.version}"
