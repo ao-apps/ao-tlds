@@ -1,6 +1,6 @@
 /*
  * ao-tlds - Self-updating Java API to get top-level domains.
- * Copyright (C) 2016, 2017, 2018, 2019, 2020, 2021, 2022  AO Industries, Inc.
+ * Copyright (C) 2016, 2017, 2018, 2019, 2020, 2021, 2022, 2024  AO Industries, Inc.
  *     support@aoindustries.com
  *     7262 Bull Pen Cir
  *     Mobile, AL 36695
@@ -366,9 +366,8 @@ public final class TopLevelDomain {
      * Gets an unmodifiable list of the most recently retrieved top-level domains,
      * in the case and order contained within
      * <a href="https://data.iana.org/TLD/tlds-alpha-by-domain.txt">tlds-alpha-by-domain.txt</a>.
-     * <p>
-     * Each element is {@link String#intern() interned}.
-     * </p>
+     *
+     * <p>Each element is {@link String#intern() interned}.</p>
      *
      * @see  TopLevelDomain#getTopLevelDomains()
      */
@@ -430,9 +429,8 @@ public final class TopLevelDomain {
 
     /**
      * Provides a way to get the top level domain based on label (case-insensitive).
-     * <p>
-     * Any non-null returned value is {@link String#intern() interned}.
-     * </p>
+     *
+     * <p>Any non-null returned value is {@link String#intern() interned}.</p>
      *
      * @return  The top level domain based on label (case-insensitive) or {@code null} if no match.
      *
@@ -614,9 +612,8 @@ public final class TopLevelDomain {
    * Gets an unmodifiable list of the most recently retrieved top-level domains,
    * in the case and order contained within
    * <a href="https://data.iana.org/TLD/tlds-alpha-by-domain.txt">tlds-alpha-by-domain.txt</a>.
-   * <p>
-   * Each element is {@link String#intern() interned}.
-   * </p>
+   *
+   * <p>Each element is {@link String#intern() interned}.</p>
    *
    * @see  Snapshot#getTopLevelDomains()
    * @see  #getSnapshot()
@@ -682,9 +679,8 @@ public final class TopLevelDomain {
 
   /**
    * Provides a way to get the top level domain based on label (case-insensitive).
-   * <p>
-   * Any non-null returned value is {@link String#intern() interned}.
-   * </p>
+   *
+   * <p>Any non-null returned value is {@link String#intern() interned}.</p>
    *
    * @return  The top level domain based on label (case-insensitive) or {@code null} if no match.
    *
