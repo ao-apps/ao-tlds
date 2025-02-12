@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--
 ao-tlds - Self-updating Java API to get top-level domains.
-Copyright (C) 2016, 2017, 2018, 2019, 2020, 2021, 2022, 2023  AO Industries, Inc.
+Copyright (C) 2016, 2017, 2018, 2019, 2020, 2021, 2022, 2023, 2025  AO Industries, Inc.
     support@aoindustries.com
     7262 Bull Pen Cir
     Mobile, AL 36695
@@ -37,7 +37,7 @@ along with ao-tlds.  If not, see <https://www.gnu.org/licenses/>.
     shortTitle="Changelog"
     tocLevels="1"
     datePublished="2016-12-12T14:20:29-06:00"
-    dateModified="2021-07-04T22:02:11-05:00"
+    dateModified="2025-02-12T02:29:49Z"
   >
     <c:set var="latestRelease" value="2.0.0" />
     <c:if test="${
@@ -52,7 +52,11 @@ along with ao-tlds.  If not, see <https://www.gnu.org/licenses/>.
         artifactId="@{documented.artifactId}"
         repository="@{nexusUrl}content/repositories/snapshots/"
         scmUrl="@{project.scm.url}"
-      />
+      >
+        <ul>
+          <li>Minimum Java version changed from 1.8 to 11.</li>
+        </ul>
+      </changelog:release>
     </c:if>
 
     <changelog:release
