@@ -37,7 +37,7 @@ along with ao-tlds.  If not, see <https://www.gnu.org/licenses/>.
     shortTitle="Changelog"
     tocLevels="1"
     datePublished="2016-12-12T14:20:29-06:00"
-    dateModified="2025-02-12T02:29:49Z"
+    dateModified="2025-07-02T23:05:45Z"
   >
     <c:set var="latestRelease" value="2.0.0" />
     <c:if test="${
@@ -50,7 +50,6 @@ along with ao-tlds.  If not, see <https://www.gnu.org/licenses/>.
         version="@{project.version}"
         groupId="@{project.groupId}"
         artifactId="@{documented.artifactId}"
-        repository="@{nexusUrl}content/repositories/snapshots/"
         scmUrl="@{project.scm.url}"
       >
         <ul>

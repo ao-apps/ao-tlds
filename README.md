@@ -22,7 +22,7 @@ Self-updating Java API to get top-level domains.
 * [Project Home](https://oss.aoapps.com/tlds/)
 * [Changelog](https://oss.aoapps.com/tlds/changelog)
 * [API Docs](https://oss.aoapps.com/tlds/apidocs/)
-* [Maven Central Repository](https://central.sonatype.com/artifact/com.aoapps/ao-tlds)
+* [Central Repository](https://central.sonatype.com/artifact/com.aoapps/ao-tlds)
 * [GitHub](https://github.com/ao-apps/ao-tlds)
 
 ## Features
