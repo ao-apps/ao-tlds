@@ -1,0 +1,202 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ao-tlds - Self-updating Java API to get top-level domains.
+Copyright (C) 2016, 2017, 2018, 2019, 2020, 2021, 2022, 2023, 2025  AO Industries, Inc.
+    support@aoindustries.com
+    7262 Bull Pen Cir
+    Mobile, AL 36695
+
+This file is part of ao-tlds.
+
+ao-tlds is free software: you can redistribute it and/or modify
+it under the terms of the GNU Lesser General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+ao-tlds is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU Lesser General Public License for more details.
+
+You should have received a copy of the GNU Lesser General Public License
+along with ao-tlds.  If not, see <https://www.gnu.org/licenses/>.
+-->
+<jsp:root
+  xmlns:ao="https://oss.aoapps.com/taglib/"
+  xmlns:c="http://java.sun.com/jsp/jstl/core"
+  xmlns:changelog="https://semanticcms.com/changelog/taglib/"
+  xmlns:core="https://semanticcms.com/core/taglib/"
+  xmlns:fn="http://java.sun.com/jsp/jstl/functions"
+  xmlns:jsp="http://java.sun.com/JSP/Page"
+  version="2.1"
+>
+  <jsp:directive.page language="java" pageEncoding="UTF-8" />
+  <jsp:directive.page session="false" />
+  <core:page
+    title="@{documented.name} Changelog"
+    shortTitle="Changelog"
+    tocLevels="1"
+    datePublished="2016-12-12T14:20:29-06:00"
+    dateModified="2025-07-02T23:05:45Z"
+  >
+    <c:set var="latestRelease" value="2.0.0" />
+    <c:if test="${
+      fn:endsWith('@{project.version}', '-SNAPSHOT')
+      and !fn:endsWith('@{project.version}', '-POST-SNAPSHOT')
+      and '@{project.version}' != (latestRelease.concat('-SNAPSHOT'))
+    }">
+      <changelog:release
+        projectName="@{documented.name}"
+        version="@{project.version}"
+        groupId="@{project.groupId}"
+        artifactId="@{documented.artifactId}"
+        scmUrl="@{project.scm.url}"
+      >
+        <ul>
+          <li>Minimum Java version changed from 1.8 to 11.</li>
+        </ul>
+      </changelog:release>
+    </c:if>
+
+    <changelog:release
+      projectName="@{documented.name}"
+      version="2.0.0"
+      datePublished="2021-07-04T22:02:11-05:00"
+      groupId="@{project.groupId}"
+      artifactId="@{documented.artifactId}"
+      scmUrl="@{project.scm.url}"
+    >
+      <ul>
+        <li>Now supports Java 9+ modules with included <code>module-info.class</code>.</li>
+        <li>Maven artifact relocated from <code>com.aoindustries:ao-tlds</code> to <code>com.aoapps:ao-tlds</code>.</li>
+        <li>Package renamed from <code>com.aoindustries.tlds</code> to <code>com.aoapps.tlds</code>.</li>
+        <li>SQL schema renamed from <code>com.aoindustries.tlds</code> to <code>com.aoapps.tlds</code>.</li>
+        <li>Updated bundled <code>tlds-alpha-by-domain.txt</code> to version <code>2021070400</code>.</li>
+      </ul>
+    </changelog:release>
+
+    <changelog:release
+      projectName="@{documented.name}"
+      version="1.2.0"
+      datePublished="2020-11-17T22:48:10-06:00"
+      groupId="com.aoindustries"
+      artifactId="@{documented.artifactId}"
+      scmUrl="@{project.scm.url}"
+    >
+      <ul>
+        <li>Now depends on <core:link book="/collections" page="/index.jspx" />.</li>
+        <li>Updated bundled <code>tlds-alpha-by-domain.txt</code> to version <code>2020111700</code>.</li>
+      </ul>
+    </changelog:release>
+
+    <changelog:release
+      projectName="@{documented.name}"
+      version="1.1.3"
+      datePublished="2020-03-23T23:28:05-05:00"
+      groupId="com.aoindustries"
+      artifactId="@{documented.artifactId}"
+      scmUrl="@{project.scm.url}"
+    >
+      <ul>
+        <li>Minimum Java version changed from 1.7 to 1.8.</li>
+        <li>
+          Reduced use of property substitutions in <code>pom.xml</code>.
+          This is to help 3rd-party parsers that fail to perform full Maven-compatible substitutions.
+        </li>
+        <li>Updated dependencies.</li>
+        <li>Updated bundled <code>tlds-alpha-by-domain.txt</code> to version <code>2020032300</code>.</li>
+      </ul>
+    </changelog:release>
+
+    <changelog:release
+      projectName="@{documented.name}"
+      version="1.1.2"
+      datePublished="2019-10-04T04:25:43-05:00"
+      groupId="com.aoindustries"
+      artifactId="@{documented.artifactId}"
+      scmUrl="@{project.scm.url}"
+    >
+      <ul>
+        <li>Using <code>java.nio.charset.StandardCharsets</code> instead of <code>"UTF-8"</code>.</li>
+        <li>Updated bundled <code>tlds-alpha-by-domain.txt</code> to version <code>2019100400</code>.</li>
+      </ul>
+    </changelog:release>
+
+    <changelog:release
+      projectName="@{documented.name}"
+      version="1.1.1"
+      datePublished="2019-06-21T03:25:51-05:00"
+      groupId="com.aoindustries"
+      artifactId="@{documented.artifactId}"
+      scmUrl="@{project.scm.url}"
+    >
+      <ul>
+        <li>Updated version of <core:link book="/parent" page="/index.jspx" />.</li>
+        <li>Using managed dependencies:
+          <ol>
+            <li>This project uses managed dependencies.</li>
+            <li>This project's managed dependencies may also be imported by other projects.</li>
+          </ol>
+        </li>
+        <li>Updated bundled <code>tlds-alpha-by-domain.txt</code> to version <code>2019061901</code>.</li>
+      </ul>
+    </changelog:release>
+
+    <changelog:release
+      projectName="@{documented.name}"
+      version="1.1.0"
+      datePublished="2019-04-22T20:39:26-05:00"
+      groupId="com.aoindustries"
+      artifactId="@{documented.artifactId}"
+      scmUrl="@{project.scm.url}"
+    >
+      <ul>
+        <li>Minimum Java version changed from 1.6 to 1.7.</li>
+        <li>Updated bundled <code>tlds-alpha-by-domain.txt</code> to version <code>2019042200</code>.</li>
+        <li>
+          Exposed <ao:a href="apidocs/com.aoapps.tlds/com/aoapps/tlds/TopLevelDomain.Snapshot.html">TopLevelDomain.Snapshot</ao:a>,
+          which is the mechanism used to represent a single moment-in-time for both the list
+          and its meta-data.  This is useful when multiple operations need to be performed
+          against a single moment-in-time representation of the list.
+        </li>
+        <li>Added SQL implementation in alternate "sql" classifier.</li>
+        <li>
+          Now using bundled bootstrap top-level domain list when it is newer than the version from preferences.
+          This can occur when a system that was able to auto-update in the past, but is currently unable to,
+          gets updated to a newer version of <code>ao-tlds</code>.
+        </li>
+        <li>
+          New method <code>isBootstrap()</code> to determine whether the data is obtained from the bundled bootstrap data
+          or from an automatic update.
+        </li>
+      </ul>
+    </changelog:release>
+
+    <changelog:release
+      projectName="@{documented.name}"
+      version="1.0.1"
+      datePublished="2017-07-20T01:45:39-05:00"
+      groupId="com.aoindustries"
+      artifactId="@{documented.artifactId}"
+      scmUrl="@{project.scm.url}"
+    >
+      <ul>
+        <li>Updated comments and variable names to match implementation of minimum + random update intervals.</li>
+        <li>Updated dependencies.</li>
+      </ul>
+    </changelog:release>
+
+    <changelog:release
+      projectName="@{documented.name}"
+      version="1.0.0"
+      datePublished="2016-12-12T14:20:29-06:00"
+      groupId="com.aoindustries"
+      artifactId="@{documented.artifactId}"
+      scmUrl="@{project.scm.url}"
+    >
+      <ul>
+        <li>New self-updating Java API to get top-level domains.</li>
+      </ul>
+    </changelog:release>
+  </core:page>
+</jsp:root>
