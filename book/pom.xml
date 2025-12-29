@@ -37,6 +37,9 @@ along with ao-tlds.  If not, see <https://www.gnu.org/licenses/>.
     <project.build.outputTimestamp>${git.commit.time}</project.build.outputTimestamp>
     <module.name>com.aoapps.tlds.book</module.name>
     <subproject.subpath>book/</subproject.subpath>
+    <!-- Java 17 -->
+    <javase.version>17</javase.version>
+    <javase.release>17</javase.release>
     <!-- These values are copied from the project being documented -->
     <documented.artifactId>ao-tlds</documented.artifactId>
     <documented.name>AO TLDs</documented.name>
