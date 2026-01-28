@@ -98,6 +98,7 @@ pipeline {
       threshold: hudson.model.Result.SUCCESS,
       upstreamProjects: "${prunedUpstreamProjects.join(', ')}"
     )
+    cron(cron)
   }
   stages {
     stage('Setup') {
