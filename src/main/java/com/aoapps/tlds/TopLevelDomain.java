@@ -616,7 +616,7 @@ public final class TopLevelDomain {
    * <p>Each element is {@link String#intern() interned}.</p>
    *
    * @see  Snapshot#getTopLevelDomains()
-   * @see  #getSnapshot()
+   * @see  TopLevelDomain#getSnapshot()
    */
   public static List<String> getTopLevelDomains() {
     return getSnapshot().getTopLevelDomains();
@@ -628,7 +628,7 @@ public final class TopLevelDomain {
    * All lines starting with {@code "#"} are considered to be comments.
    *
    * @see  Snapshot#getComments()
-   * @see  #getSnapshot()
+   * @see  TopLevelDomain#getSnapshot()
    */
   public static List<String> getComments() {
     return getSnapshot().getComments();
@@ -639,7 +639,7 @@ public final class TopLevelDomain {
    * successful or not.
    *
    * @see  Snapshot#getLastUpdatedTime()
-   * @see  #getSnapshot()
+   * @see  TopLevelDomain#getSnapshot()
    */
   public static long getLastUpdatedTime() {
     return getSnapshot().getLastUpdatedTime();
@@ -651,7 +651,7 @@ public final class TopLevelDomain {
    * @return  {@code true} if this is the included bootstrap data, or {@code false} is this is auto-updated
    *
    * @see  Snapshot#isBootstrap()
-   * @see  #getSnapshot()
+   * @see  TopLevelDomain#getSnapshot()
    */
   public static boolean isBootstrap() {
     return getSnapshot().isBootstrap();
@@ -661,7 +661,7 @@ public final class TopLevelDomain {
    * Gets whether the last update was successful.
    *
    * @see  Snapshot#getLastUpdateSuccessful()
-   * @see  #getSnapshot()
+   * @see  TopLevelDomain#getSnapshot()
    */
   public static boolean getLastUpdateSuccessful() {
     return getSnapshot().getLastUpdateSuccessful();
@@ -671,7 +671,7 @@ public final class TopLevelDomain {
    * Gets the last time the list was successfully updated.
    *
    * @see  Snapshot#getLastSuccessfulUpdateTime()
-   * @see  #getSnapshot()
+   * @see  TopLevelDomain#getSnapshot()
    */
   public static long getLastSuccessfulUpdateTime() {
     return getSnapshot().getLastSuccessfulUpdateTime();
@@ -685,7 +685,7 @@ public final class TopLevelDomain {
    * @return  The top level domain based on label (case-insensitive) or {@code null} if no match.
    *
    * @see  Snapshot#getByLabel(java.lang.String)
-   * @see  #getSnapshot()
+   * @see  TopLevelDomain#getSnapshot()
    */
   public static String getByLabel(String label) {
     return getSnapshot().getByLabel(label);
