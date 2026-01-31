@@ -37,9 +37,9 @@ along with ao-tlds.  If not, see <https://www.gnu.org/licenses/>.
     shortTitle="Changelog"
     tocLevels="1"
     datePublished="2016-12-12T14:20:29-06:00"
-    dateModified="2025-07-02T23:05:45Z"
+    dateModified="2026-01-30T14:06:09Z"
   >
-    <c:set var="latestRelease" value="2.0.0" />
+    <c:set var="latestRelease" value="2.1.0" />
     <c:if test="${
       fn:endsWith('@{project.version}', '-SNAPSHOT')
       and !fn:endsWith('@{project.version}', '-POST-SNAPSHOT')
