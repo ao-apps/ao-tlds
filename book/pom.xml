@@ -29,12 +29,12 @@ along with ao-tlds.  If not, see <https://www.gnu.org/licenses/>.
     <relativePath>../../parent/pom.xml</relativePath>
   </parent>
 
-  <groupId>com.aoapps</groupId><artifactId>ao-tlds-book</artifactId><version>2.1.0</version>
+  <groupId>com.aoapps</groupId><artifactId>ao-tlds-book</artifactId><version>2.1.0-POST-SNAPSHOT</version>
   <packaging>jar</packaging>
 
   <properties>
     <!-- Must be set to ${git.commit.time} for snapshots or ISO 8601 timestamp for releases. -->
-    <project.build.outputTimestamp>2026-02-02T13:27:36Z</project.build.outputTimestamp>
+    <project.build.outputTimestamp>${git.commit.time}</project.build.outputTimestamp>
     <module.name>com.aoapps.tlds.book</module.name>
     <subproject.subpath>book/</subproject.subpath>
     <!-- Java 17 -->
@@ -84,7 +84,7 @@ along with ao-tlds.  If not, see <https://www.gnu.org/licenses/>.
     <connection>scm:git:git://github.com/ao-apps/ao-tlds.git</connection>
     <developerConnection>scm:git:git@github.com:ao-apps/ao-tlds.git</developerConnection>
     <url>https://github.com/ao-apps/ao-tlds</url>
-    <tag>ao-tlds-book-2.1.0</tag>
+    <tag>HEAD</tag>
   </scm>
 
   <issueManagement>
